@@ -1,9 +1,7 @@
 import pandas as pd
 import numpy as np
 import streamlit as st
-from surprise import Reader, Dataset, SVD, accuracy
-from surprise.model_selection import cross_validate
-import random
+from surprise import Reader, Dataset, SVD
 
 
 
