@@ -216,38 +216,3 @@ if st.button('Obtener recomendaciones'):
 
 
 
-# Carga de datos
-streaming_df = pd.read_parquet('new_df2.parquet')
-
-
-# Definir el lector de Surprise
-reader = Reader(rating_scale=(1, 10))
-
-# Crear el dataset de Surprise
-data = Dataset.load_from_df(streaming_df[['userId', 'title', 'score']], reader)
-
-# Entrenar modelo SVD
-trainset, testset = train_test_split(data, test_size=.25)
-algo = SVD()
-algo.fit(trainset)
-
-# Función para obtener recomendaciones
-def get_recommendations(user_id, n=10):
-    # Obtener predicciones para los items no calificados del usuario
-    unrated_items = streaming_df[~streaming_df['title'].isin(trainset.ur[user_id])]
-    unrated_items = list(unrated_items['title'].unique())
-    predictions = [algo.predict(user_id, item) for item in unrated_items]
-    # Ordenar las predicciones por la calificación estimada
-    predictions.sort(key=lambda x: x.est, reverse=True)
-    # Devolver los títulos de las películas recomendadas
-    return [pred.id for pred in predictions[:n]]
-
-# Interfaz de Streamlit
-st.title('Sistema de recomendación de streaming')
-st.write('Ingrese su ID de usuario:')
-user_id = st.number_input('', value=1, step=1)
-if st.button('Obtener recomendaciones'):
-    recommendations = get_recommendations(user_id)
-    st.write('Recomendaciones:')
-    for title in recommendations:
-        st.write('-', title)
