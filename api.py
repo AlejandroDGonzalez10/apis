@@ -169,50 +169,6 @@ if st.button('Consultar 4'):
 
 
 
-# Carga de datos
-
-@st.cache(persist=True)
-def load_data(platform):
-    df = pd.read_parquet('archivoparquetsinnulos.parquet')
-    return df
-
-# Definir el lector de Surprise
-reader = Reader(rating_scale=(1, 10))
-
-# Crear el dataset de Surprise
-data = Dataset.load_builtin('ml-100k', reader)
-
-# Entrenar modelo KNN con Mean
-trainset = data.build_full_trainset()
-sim_options = {'name': 'pearson_baseline', 'user_based': False}
-algo = KNNWithMeans(sim_options=sim_options)
-algo.fit(trainset)
-
-# Función para obtener recomendaciones
-def get_recommendations(user_id, platform, n=10):
-    # Cargar los datos de la plataforma
-    df = load_data(platform)
-    # Obtener los títulos de las películas calificadas por el usuario
-    rated_titles = list(df[df['user_id'] == user_id]['title'].unique())
-    # Obtener las predicciones para los items no calificados del usuario
-    unrated_items = df[~df['title'].isin(rated_titles)]
-    unrated_items = list(unrated_items['title'].unique())
-    predictions = [algo.predict(user_id, item) for item in unrated_items]
-    # Ordenar las predicciones por la calificación estimada
-    predictions.sort(key=lambda x: x.est, reverse=True)
-    # Devolver los títulos de las películas recomendadas
-    return [pred.iid for pred in predictions[:n]]
-
-# Interfaz de Streamlit
-st.title('Sistema de recomendación de streaming')
-st.write('Ingrese su ID de usuario:')
-user_id = st.number_input('', value=1, step=1)
-platform = st.selectbox('Seleccione la plataforma', ('Netflix', 'Hulu', 'Amazon', 'Disney'))
-if st.button('Obtener recomendaciones'):
-    recommendations = get_recommendations(user_id, platform.lower())
-    st.write('Recomendaciones:')
-    for title in recommendations:
-        st.write('-', title)
 
 
 
