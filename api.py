@@ -1,8 +1,5 @@
 import pandas as pd
 import streamlit as st
-from surprise import Dataset, Reader, SVD
-from surprise.model_selection import train_test_split
-import matplotlib.pyplot as plt
 import seaborn as sns
 import numpy as np
 
