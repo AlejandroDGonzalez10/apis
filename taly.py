@@ -7,20 +7,20 @@ import plotly.subplots as sp
 from plotly.subplots import make_subplots
 from streamlit_folium import folium_static
 
-
+#------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 menu=('Incio', 'Beneficios', 'Dashboard', 'TalyIA','Contactos')
 seleccion=st.sidebar.selectbox('TALENTIA Menu', menu )
 
 
-
 if seleccion == "Incio":
+    
     st.image("talentia.jpeg", use_column_width=True, caption="")
     st.markdown("<h1 style='text-align: center;'>TALENTIA</h1>", unsafe_allow_html=True)
-    st.markdown("<div style='text-align: center;'><h2 style='color: #FF8C00;'>Quienes somos?</h2></div>", unsafe_allow_html=True)        
+    st.markdown("<div style='text-align: center;'><h2 style='color: #FF8C00;'>¿QUIENES SOMOS?</h2></div>", unsafe_allow_html=True)        
     st.write('')
-    st.markdown("<div style='text-align: center;'><h4>En TalentIA somos una consultora de talento que te ayuda a encontrar los perfiles que necesitas de forma eficiente y efectiva. Nuestra tecnología de Inteligencia Artificial nos permite estandarizar las características de los candidatos para que puedas recibir recomendaciones precisas y acordes a tus necesidades. Además, nos enfocamos en ofrecer un servicio personalizado y de calidad, donde nos aseguramos de entender tus requerimientos y objetivos para poder brindarte las soluciones más adecuadas. En TalentIA estamos comprometidos con la excelencia y la satisfacción de nuestros clientes. ¡Déjanos ayudarte a encontrar el talento que necesitas para llevar tu empresa al siguiente nivel! 🚀</h4></div>", unsafe_allow_html=True)
+    st.markdown("<div style='text-align: center;'><h5>En TalentIA somos una consultora de talento que te ayuda a encontrar los perfiles que necesitas de forma eficiente y efectiva. Nuestra tecnología de Inteligencia Artificial nos permite estandarizar las características de los candidatos para que puedas recibir recomendaciones precisas y acordes a tus necesidades. Además, nos enfocamos en ofrecer un servicio personalizado y de calidad, donde nos aseguramos de entender tus requerimientos y objetivos para poder brindarte las soluciones más adecuadas. En TalentIA estamos comprometidos con la excelencia y la satisfacción de nuestros clientes. ¡Déjanos ayudarte a encontrar el talento que necesitas para llevar tu empresa al siguiente nivel! 🚀</h5></div>", unsafe_allow_html=True)
     st.markdown("<div style='text-align: center;'><h2 style='color: #FF8C00;'>Misión, Visión y Valores de TALENTIA</h2></div>", unsafe_allow_html=True)
-    # Misión, Visión y Valores de TALENTIAst.write('')
+    
     st.write('')
     st.markdown('##### Misión')
     st.markdown('**En TALENTIA, nuestra misión es ser la consultora de talento líder en soluciones innovadoras para la búsqueda y selección de perfiles.**')
@@ -33,6 +33,188 @@ if seleccion == "Incio":
     st.markdown('- ***Integridad***: Actuamos con transparencia y honestidad en todas nuestras relaciones, manteniendo un alto nivel de ética profesional.')
     st.markdown('- ***Trabajo en equipo***: Fomentamos un ambiente de colaboración y trabajo en equipo, para lograr los mejores resultados.')
     st.markdown('- ***Pasión***: Nos apasiona lo que hacemos y nos esforzamos cada día por brindar el mejor servicio a nuestros clientes y candidatos.')
+    
+    st.write('')
+    st.write('')
+    st.write('')
+    st.markdown("<div style='text-align: center;'><h1 style='color: #002366;'>SITUACION ACTUAL DE LAS EMPRESAS Y RECLUTADORAS</h1></div>", unsafe_allow_html=True)
+    st.write('')
+    st.write('')
+    st.write('')
+    st.markdown('##### En un mercado laboral cada vez más competitivo, es esencial contar con el equipo adecuado que pueda llevar a su empresa o reclutadora al éxito. En nuestra consultora de recursos humanos, nos apasiona la innovación y la excelencia en todo lo que hacemos. Con más de XX años de experiencia en la industria, nuestro equipo de expertos en recursos humanos ha ayudado a innumerables clientes a superar los desafíos de contratación más difíciles, desde la disminución en las contrataciones deseadas hasta los altos costos de contratación.')
+    st.markdown('##### Nos enorgullece brindar soluciones únicas y personalizadas que superan las expectativas de nuestros clientes. Somos innovadores y estamos a la vanguardia de las últimas tendencias y tecnologías de la industria, lo que nos permite ofrecer un servicio de alta calidad y personalizado para cada cliente.')
+    st.markdown('##### Además, nos comprometemos a brindar soluciones efectivas y únicas. Contamos con una amplia red de contactos y un sistema avanzado de recomendación que nos permite encontrar a los candidatos adecuados para cada puesto y ayudar a nuestros clientes a tomar decisiones de contratación informadas y acertadas.')
+    st.markdown('##### Confíe en nosotros para brindarle soluciones de recursos humanos únicas y efectivas que lo ayuden a superar los desafíos de contratación más difíciles y a encontrar al candidato perfecto para cada puesto. En nuestra consultora, nos apasiona la excelencia y estamos dedicados a ayudar a nuestros clientes a alcanzar el éxito en un mercado laboral cada vez más competitivo.')
+    
+    st.write('')
+    st.write('')
+    st.write('')
+    
+    problematicas = {
+        "Disminucion en contrataciones deseadas": "📉",
+        "Bajo atractivo de la vacante ofertadas": "🙅‍♂️",
+        "Perdida de tiempo en permanencia de los colaboradores": "🚫",
+        "Largos periodos en tiempo promedio de contratacion": "⏳",
+        "Altos costos de contratacion": "💸"
+    }
+
+
+    st.markdown("<div style='text-align: center;'><h1 style='color: #002366;'>PROBLEMAS A SOLUCIONAR</h1></div>", unsafe_allow_html=True)
+
+
+    st.write('')
+    st.write('')
+    st.write('')
+    st.write('')
+
+    col1, col2, col3, col4, col5 = st.columns(5)
+
+
+    with col1:
+        st.metric("CONTRATACIONES", str(problematicas["Disminucion en contrataciones deseadas"]) , delta_color="inverse")
+        st.markdown("<p style='font-size: 18px; font-weight: bold;'><h5>Disminucion en contrataciones deseadas</h5></p>", unsafe_allow_html=True)
+
+    with col2:
+        st.metric("BAJO ATRACTIVO", str(problematicas["Bajo atractivo de la vacante ofertadas"]) , delta_color="inverse")
+        st.markdown("<p style='font-size: 18px; font-weight: bold;'><h5>Bajo atractivo de la vacante ofertadas</h5></p>", unsafe_allow_html=True)
+
+    with col3:
+        st.metric("PERDIDA", str(problematicas["Perdida de tiempo en permanencia de los colaboradores"]) , delta_color="inverse")
+        st.markdown("<p style='font-size: 18px; font-weight: bold;'><h5>Perdida de tiempo en permanencia de los colaboradores</h5></p>", unsafe_allow_html=True)
+
+    with col4:
+        st.metric("LARGOS PERIODOS", str(problematicas["Largos periodos en tiempo promedio de contratacion"]) , delta_color="inverse")
+        st.markdown("<p style='font-size: 18px; font-weight: bold;'><h5>Largos periodos en tiempo promedio de contratacion</h5></p>", unsafe_allow_html=True)
+
+    with col5:
+        st.metric("COSTOS ALTOS", str(problematicas["Altos costos de contratacion"]) , delta_color="inverse")
+        st.markdown("<p style='font-size: 18px; font-weight: bold;'><h5>Altos costos de contratacion</h5></p>", unsafe_allow_html=True)
+
+
+
+
+    st.write('')
+    st.write('')
+    st.write('')
+    st.write('')
+    st.write('')
+    st.write('')
+    st.write('')
+
+    st.markdown("<div style='text-align: center;'><h1 style='color: #FF8C00;'>¿QUE BENEFICIOS TIENES CON TALY?</h1></div>", unsafe_allow_html=True)
+    
+    st.write('')
+    st.write('') 
+
+    st.markdown('##### ¿Estás buscando una forma efectiva de encontrar y contratar el mejor talento para tu empresa? ¿Te gustaría contar con un servicio personalizado y de calidad que te permita obtener recomendaciones precisas y acordes a tus necesidades? Si es así, estás en el lugar correcto. En TalentIA somos una consultora de talento especializada en la búsqueda y selección de los perfiles más adecuados para cada empresa. Nos respalda una tecnología de Inteligencia Artificial que nos permite estandarizar las características de los candidatos, agilizando el proceso de selección y optimizando los resultados.')
+    
+    st.write('')
+    st.write('') 
+
+    st.markdown('##### En TalentIA nos enfocamos en entender tus requerimientos y objetivos para brindarte soluciones personalizadas que se adapten a tus necesidades específicas. Nos comprometemos a ofrecerte un servicio de calidad, donde la excelencia y la satisfacción de nuestros clientes son nuestra prioridad. Trabajamos con empresas de todos los tamaños y sectores, y contamos con un equipo de expertos en consultoría de talento que te guiará en todo momento para que tomes las mejores decisiones.')
+    
+    st.write('')
+    st.write('')
+
+    st.markdown('##### Además, en TalentIA creemos que la contratación de talento debe ser un proceso justo e inclusivo, por lo que nos aseguramos de fomentar la diversidad y la igualdad de oportunidades en todas nuestras búsquedas. Estamos comprometidos con la construcción de un mercado laboral más equitativo y justo para todos.')
+    
+    st.write('')
+    st.write('')
+    
+
+    kpis = {
+        "Aumento de las contrataciones un": 20,
+        "Aumento de atractivo de la vacante en": 15,
+        "Mejora en el tiempo de permanencia de los colaboradores": 10,
+        "Reducción de en el tiempo promedio de contratacion": 15,
+        "Reduccion de costos de contratacion": 50
+    }
+
+
+    st.markdown("<div style='text-align: center;'><h1 style='color: #FF8C00;'>BENEFICIO DE NUESTRO SERVICIOS</h1></div>", unsafe_allow_html=True)
+
+    st.write('')
+    st.write('')
+    st.write('')
+    st.write('')
+
+    col1, col2, col3, col4, col5 = st.columns(5)
+
+
+    with col1:
+        st.metric("BENEFICIOS EN UN", str(kpis["Aumento de las contrataciones un"]) + "%", delta_color="inverse")
+        st.markdown("<p style='font-size: 18px; font-weight: bold;'><h5>Aumento de las contrataciones</h5></p>", unsafe_allow_html=True)
+
+    with col2:
+        st.metric("BENEFICIOS EN UN", str(kpis["Aumento de atractivo de la vacante en"]) + "%", delta_color="inverse")
+        st.markdown("<p style='font-size: 18px; font-weight: bold;'><h5>Aumento de atractivo en la vacante</h5></p>", unsafe_allow_html=True)
+
+    with col3:
+        st.metric("BENEFICIOS EN UN", str(kpis["Mejora en el tiempo de permanencia de los colaboradores"]) + "%", delta_color="inverse")
+        st.markdown("<p style='font-size: 18px; font-weight: bold;'><h5>Mejora en el tiempo de permanencia de los colaboradores</h5></p>", unsafe_allow_html=True)
+
+    with col4:
+        st.metric("BENEFICIOS EN UN", str(kpis["Reducción de en el tiempo promedio de contratacion"]) + "%", delta_color="inverse")
+        st.markdown("<p style='font-size: 18px; font-weight: bold;'><h5>Reducción de en el tiempo promedio de contratación</h5></p>", unsafe_allow_html=True)
+
+    with col5:
+        st.metric("BENEFICIOS EN UN", str(kpis["Reduccion de costos de contratacion"]) + "%", delta_color="inverse")
+        st.markdown("<p style='font-size: 18px; font-weight: bold;'><h5>Reducción de costos de contratación</h5></p>", unsafe_allow_html=True)
+
+
+    st.write('')
+    st.write('')
+    st.write('')
+    st.write('')
+    st.write('')
+
+    st.markdown("<div style='text-align: center;'><h1 style='color: #002366;'>SISTEMA DE RECOMENDACIÓN</h1></div>", unsafe_allow_html=True)
+    
+    st.write('')
+    st.write('')
+    st.write('')
+
+    st.subheader('Con nuestro modelo de Machine Learning de estandarización de perfiles, nos enfocamos en maximizar las posibilidades de crecimiento con el mínimo esfuerzo y obtener resultados óptimos al comprender las características de tu vacante a cubrir, recomendándote el perfil más adecuado para satisfacer tus necesidades.')
+
+
+    st.write('')
+    st.write('')
+    st.write('')
+
+
+    st.markdown("<div style='text-align: center;'><h2 style='color: #007000;'> Esto es un ejemplo de como medimos el avance con nuestros socios</h2</div>", unsafe_allow_html=True)
+
+    st.write('')
+    st.write('')
+    st.write('')
+
+    col1, col2, col3, col4, col5 = st.columns(5)
+
+    with col1:# Creamos una casilla con el número de empleos totales y su variación respecto al mes anterior
+        st.metric("CONTRATACIONES", "10", delta="2 (+20%)", delta_color="normal")
+        st.markdown("<p style='font-size: 18px; font-weight: bold;'><h5>Contrataciones totales por mes </h5></p>", unsafe_allow_html=True)
+
+    with col2:
+        st.metric("ASPIRANTES ", "30", delta="4 (+15%)", delta_color="normal")
+        st.markdown("<p style='font-size: 18px; font-weight: bold;'><h5>Aspirantes adecuados en entrevistas</h5></p>", unsafe_allow_html=True)
+
+    with col3:
+        st.metric("PERMANENCIA ANUAL", "20", delta="4 (+20%)", delta_color="normal")
+        st.markdown("<p style='font-size: 18px; font-weight: bold;'><h5>Mas tiempo de permanencia de los colaboradores en periodo anual</h5></p>", unsafe_allow_html=True)
+
+    with col4:
+        st.metric("TIEMPO EN MESES", "3", delta="2.5 (+15%)", delta_color="normal")
+        st.markdown("<p style='font-size: 18px; font-weight: bold;'><h5>Duracion de 3 meses a 2 meses en contratacion</h5></p>", unsafe_allow_html=True)
+
+    with col5:
+        st.metric("COSTOS", "1000 usd", delta="500 (-50%)", delta_color="normal")
+        st.markdown("<p style='font-size: 18px; font-weight: bold;'><h5>Reduccion en los costos a la mitad segun valores del mercado</h5></p>", unsafe_allow_html=True)
+
+
+    
+    
+    
+
     st.write('')
     st.write('')
     st.write('')
@@ -72,7 +254,8 @@ if seleccion == "Incio":
     df = pd.DataFrame(datos, fechas)
 
     # Creamos el título del dashboard
-    st.header('Gráfico de tendencia de vacantes laborales en el sector IT en Latinoamérica')
+    st.markdown("<div><h2 style='color: #007000;'>Gráfico de tendencia de vacantes laborales en el sector IT en Latinoamérica</h2></div>", unsafe_allow_html=True)
+
 
     # Creamos un filtro para seleccionar el país
     paises = df.columns.tolist()
@@ -104,6 +287,8 @@ if seleccion == "Incio":
     col1.plotly_chart(fig1)
     col2.plotly_chart(fig2)
 
+#--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
     st.write('')
     st.write('')
     st.write('')
@@ -112,12 +297,16 @@ if seleccion == "Incio":
 
 
     st.markdown("<div style='text-align: center;'><h1 style='color: #002366;'>OFERTA LABORALES EN EL ÁREA DE DATA</h1></div>", unsafe_allow_html=True)
-    st.markdown("<div style='text-align: center;'><h3>En princpio **TALY** se enfoca en el area de DATA por eso nos especializamos en los tres perfiles principales como ser DATA ANLAYTIC, DATA ENGINEER Y DATA SCIENCE es así que confiamos en nuestra excelencia en la especialización y análisis de estos perfiles para que tu empresa pueda tener los mejores talentos.</h3></div>", unsafe_allow_html=True)
+    st.markdown("<div style='text-align: center;'><h3>En princpio TALY se enfoca en el area de DATA por eso nos especializamos en los tres perfiles principales como ser DATA ANLAYTIC, DATA ENGINEER Y DATA SCIENCE es así que confiamos en nuestra excelencia en la especialización y análisis de estos perfiles para que tu empresa pueda tener los mejores talentos.</h3></div>", unsafe_allow_html=True)
+
+
     st.write('')
     st.write('')
     st.write('')
     st.write('')
     st.write('')
+
+
     # Cargamos los datos de cada archivo CSV
     dataa = pd.read_csv("linkedin_DA_empleos.csv")
     datae = pd.read_csv("linkedin_DI_empleos.csv")
@@ -150,7 +339,7 @@ if seleccion == "Incio":
     # Mostramos el gráfico en Streamlit
     st.plotly_chart(fig)
 
-
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
     st.write('')
@@ -222,6 +411,8 @@ if seleccion == "Incio":
 
 
     #------------------------------------------------------------------------------------------------
+    
+    
     color_discrete_map = ("#2E86C1","#FF3131","#85C1E9",)
 
     # Filtramos los datos basado en la selección del usuario
@@ -275,135 +466,13 @@ if seleccion == "Incio":
     col1.plotly_chart(fig5)
     col1.plotly_chart(fig6)
 
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
 
 
-
-    problematicas = {
-        "Disminucion de las contrataciones un": "📉",
-        "Bajo atractivo de la vacante en": "🙅‍♂️",
-        "Perdida de tiempo en permanencia de los colaboradores": "🚫",
-        "Largos periodos en tiempo promedio de contratacion": "⏳",
-        "Altos costos de contratacion": "💸"
-    }
-
-
-    st.markdown("<div style='text-align: center;'><h1>PROBLEMATICAS   A   SOLUCIONAR</h1></div>", unsafe_allow_html=True)
-
-    col1, col2, col3, col4, col5 = st.columns(5)
-
-
-    with col1:
-        st.metric("DISMINUCION", str(problematicas["Disminucion de las contrataciones un"]) , delta_color="inverse")
-        st.markdown("<p style='font-size: 18px; font-weight: bold;'>Disminucion de las contrataciones un</p>", unsafe_allow_html=True)
-
-    with col2:
-        st.metric("BAJO ATRACTIVO", str(problematicas["Bajo atractivo de la vacante en"]) , delta_color="inverse")
-        st.markdown("<p style='font-size: 18px; font-weight: bold;'>Bajo atractivo de la vacante en</p>", unsafe_allow_html=True)
-
-    with col3:
-        st.metric("PERDIDA", str(problematicas["Perdida de tiempo en permanencia de los colaboradores"]) , delta_color="inverse")
-        st.markdown("<p style='font-size: 18px; font-weight: bold;'>Perdida de tiempo en permanencia de los colaboradores</p>", unsafe_allow_html=True)
-
-    with col4:
-        st.metric("LARGOS PERIODOS", str(problematicas["Largos periodos en tiempo promedio de contratacion"]) , delta_color="inverse")
-        st.markdown("<p style='font-size: 18px; font-weight: bold;'>Largos periodos en tiempo promedio de contratacion</p>", unsafe_allow_html=True)
-
-    with col5:
-        st.metric("COSTOS ALTOS", str(problematicas["Altos costos de contratacion"]) , delta_color="inverse")
-        st.markdown("<p style='font-size: 18px; font-weight: bold;'>Altos costos de contratacion</p>", unsafe_allow_html=True)
-
-
-
-
-    st.write('')
-    st.write('')
-    st.write('')
-    st.write('')
-    st.write('')
-
-
-
-
-
-    kpis = {
-        "Aumento de las contrataciones un": 20,
-        "Aumento de atractivo de la vacante en": 15,
-        "Mejora en el tiempo de permanencia de los colaboradores": 10,
-        "Reducción de en el tiempo promedio de contratacion": 15,
-        "Reduccion de costos de contratacion": 50
-    }
-
-
-    st.markdown("<div style='text-align: center;'><h1>BENEFICIO DE NUESTRO SERVICIOS</h1></div>", unsafe_allow_html=True)
-
-    col1, col2, col3, col4, col5 = st.columns(5)
-
-
-    with col1:
-        st.metric("Beneficios en un", str(kpis["Aumento de las contrataciones un"]) + "%", delta_color="inverse")
-        st.markdown("<p style='font-size: 18px; font-weight: bold;'>Aumento de las contrataciones</p>", unsafe_allow_html=True)
-
-    with col2:
-        st.metric("Beneficios en un", str(kpis["Aumento de atractivo de la vacante en"]) + "%", delta_color="inverse")
-        st.markdown("<p style='font-size: 18px; font-weight: bold;'>Aumento de atractivo en la vacante</p>", unsafe_allow_html=True)
-
-    with col3:
-        st.metric("Beneficios en un", str(kpis["Mejora en el tiempo de permanencia de los colaboradores"]) + "%", delta_color="inverse")
-        st.markdown("<p style='font-size: 18px; font-weight: bold;'>Mejora en el tiempo de permanencia de los colaboradores</p>", unsafe_allow_html=True)
-
-    with col4:
-        st.metric("Beneficios en un", str(kpis["Reducción de en el tiempo promedio de contratacion"]) + "%", delta_color="inverse")
-        st.markdown("<p style='font-size: 18px; font-weight: bold;'>Reducción de en el tiempo promedio de contratación</p>", unsafe_allow_html=True)
-
-    with col5:
-        st.metric("Beneficios en un", str(kpis["Reduccion de costos de contratacion"]) + "%", delta_color="inverse")
-        st.markdown("<p style='font-size: 18px; font-weight: bold;'>Reducción de costos de contratación</p>", unsafe_allow_html=True)
-
-
-    st.write('')
-    st.write('')
-    st.write('')
-    st.write('')
-    st.write('')
-
-    st.markdown("<div style='text-align: center;'><h1>SISTEMA DE RECOMENDDACIÓN</h1></div>", unsafe_allow_html=True)
-    st.subheader('Con nuestro modelo de ML de estadarizaciones de perfiles, optamos por maximizar las posibilides de crecer con el manimo de esfuerzo y maximo resultados logrando comprender las caracteristicas de tu vacante a cubrir y recomendadote el mejor perfil que se adapte a tus necesidades.')
-
-
-    st.write('')
-    st.write('')
-    st.write('')
-
-
-    st.subheader(' Esto es un ejemplo de como medimos nuestros avances con nuestros socios')
-
-
-    col1, col2, col3, col4, col5 = st.columns(5)
-
-    with col1:# Creamos una casilla con el número de empleos totales y su variación respecto al mes anterior
-        st.metric("contrataciones", "10", delta="2 (+20%)", delta_color="normal")
-        st.markdown("<p style='font-size: 18px; font-weight: bold;'>Contrataciones totales por mes </p>", unsafe_allow_html=True)
-
-    with col2:
-        st.metric("Aspirantes ", "30", delta="4 (+15%)", delta_color="normal")
-        st.markdown("<p style='font-size: 18px; font-weight: bold;'>Aspirantes adecuados en entrevistas</p>", unsafe_allow_html=True)
-
-    with col3:
-        st.metric("Permanencia anual", "20", delta="4 (+20%)", delta_color="normal")
-        st.markdown("<p style='font-size: 18px; font-weight: bold;'>Mas tiempo de permanencia de los colaboradores en periodo anual</p>", unsafe_allow_html=True)
-
-    with col4:
-        st.metric("Tiempo en meses", "3", delta="2.5 (+15%)", delta_color="normal")
-        st.markdown("<p style='font-size: 18px; font-weight: bold;'>Duracion de 3 meses a 2 meses en contratacion</p>", unsafe_allow_html=True)
-
-    with col5:
-        st.metric("Costos", "1000 usd", delta="500 (-50%)", delta_color="normal")
-        st.markdown("<p style='font-size: 18px; font-weight: bold;'>Reduccion en los costos a la mitad segun valores del mercado</p>", unsafe_allow_html=True)
-
-
-elif seleccion == "Opción 2":
-    st.write("Has seleccionado la Opción 2")
+#-------------------------------------------------------------------------------------------------------------------------------
+elif seleccion == "Beneficios":
+  pass
 else:
     st.write("Has seleccionado la Opción 3")
