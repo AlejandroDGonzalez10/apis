@@ -2,11 +2,9 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import plotly.express as px
-import geopandas as gpd
 import plotly.graph_objects as go
 import plotly.subplots as sp
 from plotly.subplots import make_subplots
-import folium
 from streamlit_folium import folium_static
 
 
@@ -84,12 +82,11 @@ if seleccion == "Incio":
     df_filtrado = df[[pais_seleccionado]]
 
     # Creamos las columnas para colocar el gráfico y el mapa
-    col1, col2 = st.columns(2)
-
+    
     # Creamos el gráfico de tendencia con Plotly Express y lo mostramos en la primera columna
     fig1 = px.line(df_filtrado, x=df_filtrado.index, y=pais_seleccionado, title=f'Promedio de vacantes laborales de {pais_seleccionado} del sector IT')
     fig1.update_layout( xaxis_title="Años",)
-    col1.plotly_chart(fig1)
+  
 
     # Leemos los datos para el mapa
     df_mapa = pd.read_csv('2014_world_gdp_with_codes.csv')
@@ -103,6 +100,8 @@ if seleccion == "Incio":
                         hover_name='COUNTRY', projection='mercator',
                         color_continuous_scale='Oranges')
     fig2.update_geos(fitbounds='locations', visible=False)
+    col1, col2 = st.columns(2)
+    col1.plotly_chart(fig1)
     col2.plotly_chart(fig2)
 
     st.write('')
@@ -333,7 +332,7 @@ if seleccion == "Incio":
         "Aumento de atractivo de la vacante en": 15,
         "Mejora en el tiempo de permanencia de los colaboradores": 10,
         "Reducción de en el tiempo promedio de contratacion": 15,
-        "Reduccion de costos de contratacion": 20
+        "Reduccion de costos de contratacion": 50
     }
 
 
