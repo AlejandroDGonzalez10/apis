@@ -8,7 +8,7 @@ from plotly.subplots import make_subplots
 from streamlit_folium import folium_static
 
 #------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-menu=('Incio', 'Beneficios', 'Dashboard', 'TalyIA','Contactos')
+menu=('Incio', 'Dashboard', 'TalyIA','Contactos')
 seleccion=st.sidebar.selectbox('TALENTIA Menu', menu )
 
 
@@ -466,13 +466,653 @@ if seleccion == "Incio":
     col1.plotly_chart(fig5)
     col1.plotly_chart(fig6)
 
-#----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+#     df=pd.read_csv('continentescategory.csv')
 
+
+#         # Agrupar datos por continente y categoría
+#     continent_data = df.groupby(['Continent', 'category'])['Count'].sum().reset_index()
+
+#     # Crear lista de continentes únicos para selectbox
+#     continent_list = continent_data['Continent'].unique().tolist()
+
+#     # Crear selectbox para seleccionar continente
+#     pais_seleccionado = st.selectbox('Seleccione un país', continent_list)
+
+#     # Filtrar datos por continente seleccionado
+#     continent_data_filtered = continent_data[continent_data['Continent'] == pais_seleccionado]
+
+#     # Crear gráfico de barras horizontales
+#     fig = px.bar(continent_data_filtered, x='Count', y='category', orientation='h', color='category')
+
+#     # Mostrar gráfico
+#     st.plotly_chart(fig)
+
+#    # Agrupar datos por continente y categoría
+#     continent_data = df.groupby(['Continent', 'category'])['Count'].sum().reset_index()
+
+#     # Crear figura de mapa
+#     fig = go.Figure(data=go.Choropleth(
+#         locations=continent_data['Continent'], # Ubicación de cada continente en el mapa
+#         z=continent_data['Count'], # Cantidad de categorías en cada continente
+#         locationmode='continent names', # Modo de ubicación de los continentes
+#         colorscale='Reds', # Escala de colores
+#         colorbar_title='Cantidad' # Título de la leyenda de colores
+#     ))
+
+#     # Actualizar el diseño de la figura
+#     fig.update_layout(
+#         title_text='Cantidad de categorías por continente', # Título del mapa
+#         geo=dict(
+#             showframe=False, # Ocultar el marco del mapa
+#             showcoastlines=True, # Mostrar las líneas costeras
+#             projection_type='natural earth' # Tipo de proyección del mapa
+#         )
+#     )
+
+#     # Mostrar el mapa
+#     st.plotly_chart(fig)
 
 
 
 #-------------------------------------------------------------------------------------------------------------------------------
-elif seleccion == "Beneficios":
-  pass
+elif seleccion == "Dashboard":
+    postulaciones = {
+        "6 meses": 6,
+        "3 meses": 3,
+        "1 mes": 1,
+        
+    }
+
+
+    st.markdown("<div style='text-align: center;'><h1 style='color: #FF8C00;'>POSTULACIONES EN PERIODOS</h1></div>", unsafe_allow_html=True)
+
+    st.write('')
+    st.write('')
+    st.write('')
+    st.write('')
+
+    col1, col2, col3  = st.columns(3)
+
+
+    with col1:
+        st.metric("PERIODO", str(postulaciones["6 meses"]) + " MESES", delta_color="inverse")
+    
+    with col2:
+        st.metric("PERIODO", str(postulaciones["3 meses"]) + " MESES", delta_color="inverse")
+   
+    with col3:
+        st.metric("PERIODO", str(postulaciones["1 mes"]) + " MESES", delta_color="inverse")
+
+    
+
+    col1, col2, col3 = st.columns(3)
+    periodo = ""
+
+    with st.container():
+        col1, col2, col3 = st.columns(3)
+        if col1.button("seleccione 6 meses"):
+            periodo = "seleccione 6 meses"
+        if col2.button("seleccione 3 meses"):
+            periodo = "seleccione 3 meses"
+        if col3.button("seleccione 1 mes"):
+            periodo = "seleccione 1 mes"
+
+
+    if periodo == "seleccione 6 meses":
+        with col1:
+            st.empty()
+            st.metric("PERIODO", str(postulaciones["6 meses"]) + " MESES", delta=" (+0%)", delta_color="normal")
+            st.markdown("<p style='font-size: 18px; font-weight: bold;'><h5>CANTIDAD DE POSTULACIONES</h5></p>", unsafe_allow_html=True)
+
+        color_map = {"remoto_e": "red", "onsite_e": "lightgreen", "hybrid_e": "lightblue",
+             "DATA ENGINEER": "blue", "remoto_a": "red", "onsite_a": "lightgreen",
+             "hybrid_a": "lightblue", "DATA ANALYTIC": "blue", "remoto_s": "red",
+             "onsite_s": "lightgreen", "hybrid_s": "lightblue", "DATA SCIENCE": "blue"}
+
+
+        dict_6_meses = {
+            "remoto_e": 40,
+            "onsite_e": 35,
+            "hybrid_e": 10,
+            "DATA ENGINEER": 60,
+            "remoto_a": 10,
+            "onsite_a": 20,
+            "hybrid_a": 15,
+            "DATA ANALYTIC": 40,
+            "remoto_s": 10,
+            "onsite_s": 5,
+            "hybrid_s": 10,
+            "DATA SCIENCE": 25
+        }
+
+        # Convertir el diccionario en un DataFrame de pandas
+        df = pd.DataFrame.from_dict(dict_6_meses, orient='index', columns=['Vacantes_cubiertas'])
+
+        # Agregar la columna de perfiles
+        df['Perfiles'] = df.index
+
+        # Calcular el porcentaje de crecimiento desde los 6 meses hasta la actualidad
+        df['Crecimiento'] = (df['Vacantes_cubiertas'] * 1.2) / df.loc['DATA ENGINEER', 'Vacantes_cubiertas']
+
+        # Graficar los datos
+        fig = px.bar(df, x='Vacantes_cubiertas', y='Perfiles', color='Perfiles', color_discrete_map=color_map)
+
+        # Establecer el rango de medición del eje x
+        fig.update_xaxes(range=[0, 80])
+
+        fig.update_layout(
+            title="VACANTES CUBIERTAS",
+            xaxis_title="Vacantes cubiertas",
+            yaxis_title="Perfiles Data",
+            font=dict(size=14),
+            showlegend=False,
+            width=500,
+            height=350,
+            margin=dict(t=25, b=100, l=100, r=10)
+        )
+
+        
+        df = pd.DataFrame(dict(
+            Perfiles = ["remoto_e", "onsite_e", "hybrid_e","DATA ENGINEER", "remoto_a", "onsite_a", "hybrid_a", "DATA ANALYTIC","remoto_s", "onsite_s", "hybrid_s","DATA SCIENCE"],
+            Vacantes_vigentes = [2,3,5,10,5,3,7,15,2,1,2,5 ]))
+
+      
+        fig1 = px.bar(df, x='Vacantes_vigentes', y='Perfiles', color='Perfiles', color_discrete_map=color_map)
+
+        # Establecer el rango de medición del eje x
+        fig1.update_xaxes(range=[0, 60])
+
+        fig1.update_layout(
+            title="VACANTES VIGENTES",
+            xaxis_title="Vacantes vigentes",
+            yaxis_title="Perfiles Data",
+            font=dict(size=14),
+            showlegend=False,
+            width=500,
+            height=350,
+            margin=dict(t=25, b=100, l=100, r=10)
+        )
+
+        col1, col2 =st.columns(2)
+        col1.plotly_chart(fig)
+        col2.plotly_chart(fig1)
+
+    elif periodo == "seleccione 3 meses":
+        with col2:
+            st.empty()
+            st.metric("PERIODO", str(postulaciones["3 meses"]) + " MESES", delta=" (+30%)", delta_color="normal")
+            st.markdown("<p style='font-size: 18px; font-weight: bold;'><h5>CANTIDAD DE POSTULACIONES</h5></p>", unsafe_allow_html=True)
+
+        color_map = {"remoto_e": "red", "onsite_e": "lightgreen", "hybrid_e": "lightblue",
+             "DATA ENGINEER": "blue", "remoto_a": "red", "onsite_a": "lightgreen",
+             "hybrid_a": "lightblue", "DATA ANALYTIC": "blue", "remoto_s": "red",
+             "onsite_s": "lightgreen", "hybrid_s": "lightblue", "DATA SCIENCE": "blue"}
+
+
+        dict_3_meses = {
+            'remoto_e': 26,
+            'onsite_e': 33,
+            'hybrid_e': 6,
+            'DATA ENGINEER': 50,
+            'remoto_a': 6,
+            'onsite_a': 19,
+            'hybrid_a': 13,
+            'DATA ANALYTIC': 39,
+            'remoto_s': 6,
+            'onsite_s': 3,
+            'hybrid_s': 6,
+            'DATA SCIENCE': 19}
+
+        # Convertir el diccionario en un DataFrame de pandas
+        df = pd.DataFrame.from_dict(dict_3_meses, orient='index', columns=['Vacantes_cubiertas'])
+
+        # Agregar la columna de perfiles
+        df['Perfiles'] = df.index
+
+        # Calcular el porcentaje de crecimiento desde los 6 meses hasta la actualidad
+        df['Crecimiento'] = (df['Vacantes_cubiertas'] * 1.2) / df.loc['DATA ENGINEER', 'Vacantes_cubiertas']
+
+        # Graficar los datos
+        fig = px.bar(df, x='Vacantes_cubiertas', y='Perfiles', color='Perfiles', color_discrete_map=color_map)
+
+        # Establecer el rango de medición del eje x
+        fig.update_xaxes(range=[0, 80])
+
+        fig.update_layout(
+            title="VACANTES CUBIERTAS",
+            xaxis_title="Vacantes cubiertas",
+            yaxis_title="Perfiles Data",
+            font=dict(size=14),
+            showlegend=False,
+            width=500,
+            height=350,
+            margin=dict(t=25, b=100, l=100, r=10)
+        )
+
+       
+        df = pd.DataFrame(dict(
+            Perfiles = ["remoto_e", "onsite_e", "hybrid_e","DATA ENGINEER", "remoto_a", "onsite_a", "hybrid_a", "DATA ANALYTIC","remoto_s", "onsite_s", "hybrid_s","DATA SCIENCE"],
+            Vacantes_vigentes = [2,3,5,10,5,3,7,15,2,1,2,5 ]))
+
+      
+        fig1 = px.bar(df, x='Vacantes_vigentes', y='Perfiles', color='Perfiles', color_discrete_map=color_map)
+
+        # Establecer el rango de medición del eje x
+        fig1.update_xaxes(range=[0, 60])
+
+        fig1.update_layout(
+            title="VACANTES VIGENTES",
+            xaxis_title="Vacantes vigentes",
+            yaxis_title="Perfiles Data",
+            font=dict(size=14),
+            showlegend=False,
+            width=500,
+            height=350,
+            margin=dict(t=25, b=100, l=100, r=10)
+        )
+
+        col1, col2 =st.columns(2)
+        col1.plotly_chart(fig)
+        col2.plotly_chart(fig1)
+
+
+    elif periodo == "seleccione 1 mes":
+        with col3:
+            st.empty()
+            st.metric("PERIODO", str(postulaciones["1 mes"]) + " MESES", delta=" (+50%)", delta_color="normal")
+            st.markdown("<p style='font-size: 18px; font-weight: bold;'><h5>CANTIDAD DE POSTULACIONES</h5></p>", unsafe_allow_html=True)
+        
+
+        color_map = {"remoto_e": "red", "onsite_e": "lightgreen", "hybrid_e": "lightblue",
+             "DATA ENGINEER": "blue", "remoto_a": "red", "onsite_a": "lightgreen",
+             "hybrid_a": "lightblue", "DATA ANALYTIC": "blue", "remoto_s": "red",
+             "onsite_s": "lightgreen", "hybrid_s": "lightblue", "DATA SCIENCE": "blue"}
+
+
+
+        dict_1_mes = {
+            'remoto_e': 18,
+            'onsite_e': 22,
+            'hybrid_e': 4,
+            'DATA ENGINEER': 40,
+            'remoto_a': 4,
+            'onsite_a': 13,
+            'hybrid_a': 9,
+            'DATA ANALYTIC': 27,
+            'remoto_s': 4,
+            'onsite_s': 2,
+            'hybrid_s': 4,
+            'DATA SCIENCE': 13}
+        
+
+        # Convertir el diccionario en un DataFrame de pandas
+        df = pd.DataFrame.from_dict(dict_1_mes, orient='index', columns=['Vacantes_cubiertas'])
+
+        # Agregar la columna de perfiles
+        df['Perfiles'] = df.index
+
+        # Calcular el porcentaje de crecimiento desde los 6 meses hasta la actualidad
+        df['Crecimiento'] = (df['Vacantes_cubiertas'] * 1.2) / df.loc['DATA ENGINEER', 'Vacantes_cubiertas']
+
+        # Graficar los datos
+        fig = px.bar(df, x='Vacantes_cubiertas', y='Perfiles', color='Perfiles', color_discrete_map=color_map)
+
+        # Establecer el rango de medición del eje x
+        fig.update_xaxes(range=[0, 80])
+
+        fig.update_layout(
+            title="VACANTES CUBIERTAS",
+            xaxis_title="Vacantes cubiertas",
+            yaxis_title="Perfiles Data",
+            font=dict(size=14),
+            showlegend=False,
+            width=500,
+            height=350,
+            margin=dict(t=25, b=100, l=100, r=10)
+        )
+
+       
+        df = pd.DataFrame(dict(
+            Perfiles = ["remoto_e", "onsite_e", "hybrid_e","DATA ENGINEER", "remoto_a", "onsite_a", "hybrid_a", "DATA ANALYTIC","remoto_s", "onsite_s", "hybrid_s","DATA SCIENCE"],
+            Vacantes_vigentes = [2,3,5,10,5,3,7,15,2,1,2,5 ]))
+
+      
+        fig1 = px.bar(df, x='Vacantes_vigentes', y='Perfiles', color='Perfiles', color_discrete_map=color_map)
+
+        # Establecer el rango de medición del eje x
+        fig1.update_xaxes(range=[0, 60])
+
+        fig1.update_layout(
+            title="VACANTES VIGENTES",
+            xaxis_title="Vacantes vigentes",
+            yaxis_title="Perfiles Data",
+            font=dict(size=14),
+            showlegend=False,
+            width=500,
+            height=350,
+            margin=dict(t=25, b=100, l=100, r=10)
+        )
+
+        col1, col2 =st.columns(2)
+        col1.plotly_chart(fig)
+        col2.plotly_chart(fig1)
+
+    
+    st.markdown("<div style='text-align: center;'><h1 style='color: #FF8C00;'>TIEMPO PROMEDIO DE CONTRATACIONES</h1></div>", unsafe_allow_html=True)
+
+    st.write('')
+    st.write('')
+    st.write('')
+    st.write('')
+
+    col1, col2, col3  = st.columns(3)
+
+
+    with col1:
+        st.metric("PERIODO", str(postulaciones["6 meses"]) + " MESES", delta_color="inverse")
+    
+    with col2:
+        st.metric("PERIODO", str(postulaciones["3 meses"]) + " MESES", delta_color="inverse")
+   
+    with col3:
+        st.metric("PERIODO", str(postulaciones["1 mes"]) + " MESES", delta_color="inverse")
+
+    
+
+    col1, col2, col3 = st.columns(3)
+    periodo = ""
+
+    with st.container():
+        col1, col2, col3 = st.columns(3)
+        if col1.button("seleccione 6 meses."):
+            periodo = "seleccione 6 meses."
+        if col2.button("seleccione 3 meses."):
+            periodo = "seleccione 3 meses."
+        if col3.button("seleccione 1 mes."):
+            periodo = "seleccione 1 mes."
+
+
+    if periodo == "seleccione 6 meses.":
+        with col1:
+            st.empty()   
+            st.markdown("<p style='font-size: 18px; font-weight: bold;'><h5>REDUCCION DEL TIEMPO EN CONTRATACIONES</h5></p>", unsafe_allow_html=True)
+            st.metric("PERIODO", str(postulaciones["6 meses"]) + " MESES", delta=" -0 %", delta_color="normal")
+
+        df= pd.DataFrame(dict(
+        Perfiles = 'Tiempo',
+        Vacantes_vigentes = [90 ]))
+
+        
+        fig1 = px.bar(df, x='Vacantes_vigentes', y='Perfiles')
+
+        # Establedfcer el rango de medición del eje x
+        fig1.update_xaxes(range=[0, 100])
+
+        fig1.update_layout(
+            title="TIEMPO PROMEDIO DE CONTRATACION",
+            xaxis_title="Periodo en dias",
+            yaxis_title="Tiempo",
+            font=dict(size=14),
+            showlegend=False,
+            width=500,
+            height=350,
+            margin=dict(t=170, b=100, l=100, r=10)
+        )
+        df= pd.DataFrame(dict(
+        Perfiles = 'Tiempo',
+        Vacantes_vigentes = [40 ]))
+
+        
+        fig = px.bar(df, x='Vacantes_vigentes', y='Perfiles', color_discrete_sequence=['lightgreen'])
+
+        # Establedfcer el rango de medición del eje x
+        fig.update_xaxes(range=[0, 100])
+
+        fig.update_layout(
+            title="TIEMPO PROMEDIO DE CONTRATACION ACTUALMENTE",
+            xaxis_title="Periodo en dias",
+            yaxis_title="Tiempo",
+            font=dict(size=14),
+            showlegend=False,
+            width=500,
+            height=350,
+            margin=dict(t=170, b=100, l=100, r=10)
+        )
+        col1, col2 =st.columns(2)
+        col1.plotly_chart(fig1)
+        col2.plotly_chart(fig)
+
+    elif periodo == "seleccione 3 meses.":
+        with col2:
+            st.empty()            
+            st.markdown("<p style='font-size: 18px; font-weight: bold;'><h5>REDUCCION DEL TIEMPO EN CONTRATACIONES</h5></p>", unsafe_allow_html=True)
+            st.metric("PERIODO", str(postulaciones["3 meses"]) + " MESES", delta=" -22 %", delta_color="normal")
+
+        df= pd.DataFrame(dict(
+        Perfiles = 'Tiempo',
+        Vacantes_vigentes = [70 ]))
+
+        
+        fig1 = px.bar(df, x='Vacantes_vigentes', y='Perfiles')
+
+        # Establedfcer el rango de medición del eje x
+        fig1.update_xaxes(range=[0, 100])
+
+        fig1.update_layout(
+            title="TIEMPO PROMEDIO DE CONTRATACION",
+            xaxis_title="Periodo en dias",
+            yaxis_title="Tiempo",
+            font=dict(size=14),
+            showlegend=False,
+            width=500,
+            height=350,
+            margin=dict(t=170, b=100, l=100, r=10)
+        )
+        df= pd.DataFrame(dict(
+        Perfiles = 'Tiempo',
+        Vacantes_vigentes = [40 ]))
+
+        
+        fig = px.bar(df, x='Vacantes_vigentes', y='Perfiles', color_discrete_sequence=['lightgreen'])
+
+        # Establedfcer el rango de medición del eje x
+        fig.update_xaxes(range=[0, 100])
+
+        fig.update_layout(
+            title="TIEMPO PROMEDIO DE CONTRATACION ACTUALMENTE",
+            xaxis_title="Periodo en dias",
+            yaxis_title="Tiempo",
+            font=dict(size=14),
+            showlegend=False,
+            width=500,
+            height=350,
+            margin=dict(t=170, b=100, l=100, r=10)
+        )
+        col1, col2 =st.columns(2)
+        col1.plotly_chart(fig1)
+        col2.plotly_chart(fig)
+
+    elif periodo == "seleccione 1 mes.":
+        with col3:
+            st.empty()
+            st.markdown("<p style='font-size: 18px; font-weight: bold;'><h5>REDUCCION DEL TIEMPO EN CONTRATACIONES</h5></p>", unsafe_allow_html=True)
+            st.metric("PERIODO", str(postulaciones["1 mes"]) + " MESES", delta=" -45 %", delta_color="normal")
+        
+        df= pd.DataFrame(dict(
+        Perfiles = 'Tiempo',
+        Vacantes_vigentes = [45 ]))
+
+        
+        fig1 = px.bar(df, x='Vacantes_vigentes', y='Perfiles')
+
+        # Establedfcer el rango de medición del eje x
+        fig1.update_xaxes(range=[0, 100])
+
+        fig1.update_layout(
+            title="TIEMPO PROMEDIO DE CONTRATACION",
+            xaxis_title="Periodo en dias",
+            yaxis_title="Tiempo",
+            font=dict(size=14),
+            showlegend=False,
+            width=500,
+            height=350,
+            margin=dict(t=170, b=100, l=100, r=10)
+        )
+        df= pd.DataFrame(dict(
+        Perfiles = 'Tiempo',
+        Vacantes_vigentes = [40 ]))
+
+        
+        fig = px.bar(df, x='Vacantes_vigentes', y='Perfiles', color_discrete_sequence=['lightgreen'])
+
+        # Establedfcer el rango de medición del eje x
+        fig.update_xaxes(range=[0, 100])
+
+        fig.update_layout(
+            title="TIEMPO PROMEDIO DE CONTRATACION ACTUALMENTE",
+            xaxis_title="Periodo en dias",
+            yaxis_title="Tiempo",
+            font=dict(size=14),
+            showlegend=False,
+            width=500,
+            height=350,
+            margin=dict(t=170, b=100, l=100, r=10)
+        )
+        col1, col2 =st.columns(2)
+        col1.plotly_chart(fig1)
+        col2.plotly_chart(fig)
+     
+
+    
+
+
+
+
+    st.markdown("<div style='text-align: center;'><h1 style='color: #FF8C00;'>COSTO PROMEDIO EN CONTRATACIONES</h1></div>", unsafe_allow_html=True)
+
+    st.write('')
+    st.write('')
+    st.write('')
+    st.write('')
+
+    col1, col2, col3  = st.columns(3)
+
+
+    with col1:
+        st.metric("PERIODO", str(postulaciones["6 meses"]) + " MESES", delta_color="inverse")
+    
+    with col2:
+        st.metric("PERIODO", str(postulaciones["3 meses"]) + " MESES", delta_color="inverse")
+   
+    with col3:
+        st.metric("PERIODO", str(postulaciones["1 mes"]) + " MESES", delta_color="inverse")
+
+    
+
+    col1, col2, col3 = st.columns(3)
+ 
+
+    with col1:
+        st.empty()   
+        st.markdown("<p style='font-size: 18px; font-weight: bold;'><h5>REDUCCION EN LOS COSTOS POR CONTRATACION</h5></p>", unsafe_allow_html=True)
+        st.metric("COSTO PROMEDIO", str(1000) + " USD", delta=" -0 %", delta_color="normal")
+
+    
+
+    with col2:
+        st.empty()            
+        st.markdown("<p style='font-size: 18px; font-weight: bold;'><h5>REDUCCION EN LOS COSTOS POR CONTRATACION</h5></p>", unsafe_allow_html=True)
+        st.metric("COSTO PROMEDIO ", str(500) + " USD", delta=" -50 %", delta_color="normal")
+
+    
+
+    with col3:
+        st.empty()
+        st.markdown("<p style='font-size: 18px; font-weight: bold;'><h5>REDUCCION EN LOS COSTOS POR CONTRATACION</h5></p>", unsafe_allow_html=True)
+        st.metric("COSTO PROMEDIO", str(500) + " USD", delta=" -50 %", delta_color="normal")
+        
+        
+
+    st.markdown("<div style='text-align: center;'><h1 style='color: #FF8C00;'>EFICIENCIA DEL MODELO DE REOMENDACIÓN</h1></div>", unsafe_allow_html=True)
+
+
+    col1, col2, col3  = st.columns(3)
+
+
+    with col1:
+        st.metric("PERIODO", str(postulaciones["6 meses"]) + " MESES", delta_color="inverse")
+    
+    with col2:
+        st.metric("PERIODO", str(postulaciones["3 meses"]) + " MESES", delta_color="inverse")
+   
+    with col3:
+        st.metric("PERIODO", str(postulaciones["1 mes"]) + " MESES", delta_color="inverse")
+     # Datos de ejemplo
+    aptos_1 = 20
+    no_aptos_1 = 80
+
+    aptos_2 = 60
+    no_aptos_2 = 40
+
+    aptos_3 = 40
+    no_aptos_3 = 35
+
+    
+    # Crear primer gráfico de dona
+    fig1 = go.Figure(data=[go.Pie(labels=['No Aptos','Aptos', ], 
+                                values=[aptos_1, no_aptos_1],
+                                hole=0.5,
+                                marker=dict(colors=[ 'red']))])
+    fig1.update_layout(
+            title="APTOS VS NO APTOS",
+            font=dict(size=14),
+            showlegend=False,
+            width=600,
+            height=450,
+            margin=dict(t=50, b=80, l=10, r=200)
+        )
+
+
+    # Crear segundo gráfico de dona
+    fig2 = go.Figure(data=[go.Pie(labels=['No Aptos','Aptos',], 
+                                values=[aptos_2, no_aptos_2],
+                                hole=0.5,
+                                marker=dict(colors=[ 'red']))])
+    fig2.update_layout(
+            title="APTOS VS NO APTOS",
+            font=dict(size=14),
+            showlegend=False,
+            width=600,
+            height=450,
+            margin=dict(t=50, b=80, l=10, r=200)
+        )
+
+
+    # Crear tercer gráfico de dona
+    fig3 = go.Figure(data=[go.Pie(labels=['No Aptos','Aptos',], 
+                                values=[aptos_3, no_aptos_3],
+                                hole=0.5,
+                                marker=dict(colors=['red']))])
+    fig3.update_layout(
+            title="APTOS VS NO APTOS",
+            font=dict(size=14),
+            showlegend=False,
+            width=600,
+            height=450,
+            margin=dict(t=50, b=80, l=10, r=200)
+        )
+
+    # Mostrar los gráficos
+    col1,col2,col3=st.columns(3)
+    col1.plotly_chart(fig1)
+    col2.plotly_chart(fig2)
+    col3.plotly_chart(fig3)
+
+    
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 else:
-    st.write("Has seleccionado la Opción 3")
+    st.write("Sistema de recomendacion")
+
+menuu=('Proyecto', 'back end')
+seleccion=st.sidebar.selectbox('Nosotros', menuu )
