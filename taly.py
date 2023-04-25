@@ -6,6 +6,7 @@ import plotly.graph_objects as go
 import plotly.subplots as sp
 from plotly.subplots import make_subplots
 from streamlit_folium import folium_static
+import re
 
 #------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 menu=('Incio', 'Dashboard', 'TalyIA','Contactos')
@@ -1033,7 +1034,7 @@ elif seleccion == "Dashboard":
         
         
 
-    st.markdown("<div style='text-align: center;'><h1 style='color: #FF8C00;'>EFICIENCIA DEL MODELO DE REOMENDACIÓN</h1></div>", unsafe_allow_html=True)
+    st.markdown("<div style='text-align: center;'><h1 style='color: #FF8C00;'>EFICIENCIA DEL MODELO DE RECOMENDACIÓN</h1></div>", unsafe_allow_html=True)
 
 
     col1, col2, col3  = st.columns(3)
@@ -1052,15 +1053,14 @@ elif seleccion == "Dashboard":
     no_aptos_1 = 80
 
     aptos_2 = 60
-    no_aptos_2 = 40
+    no_aptos_2 = 20
 
     aptos_3 = 40
-    no_aptos_3 = 35
-
+    no_aptos_3 = 2
     
     # Crear primer gráfico de dona
     fig1 = go.Figure(data=[go.Pie(labels=['No Aptos','Aptos', ], 
-                                values=[aptos_1, no_aptos_1],
+                                values=[no_aptos_1,aptos_1, ],
                                 hole=0.5,
                                 marker=dict(colors=[ 'red']))])
     fig1.update_layout(
@@ -1075,7 +1075,7 @@ elif seleccion == "Dashboard":
 
     # Crear segundo gráfico de dona
     fig2 = go.Figure(data=[go.Pie(labels=['No Aptos','Aptos',], 
-                                values=[aptos_2, no_aptos_2],
+                                values=[no_aptos_2,aptos_2, ],
                                 hole=0.5,
                                 marker=dict(colors=[ 'red']))])
     fig2.update_layout(
@@ -1090,7 +1090,7 @@ elif seleccion == "Dashboard":
 
     # Crear tercer gráfico de dona
     fig3 = go.Figure(data=[go.Pie(labels=['No Aptos','Aptos',], 
-                                values=[aptos_3, no_aptos_3],
+                                values=[no_aptos_3,aptos_3, ],
                                 hole=0.5,
                                 marker=dict(colors=['red']))])
     fig3.update_layout(
@@ -1112,7 +1112,227 @@ elif seleccion == "Dashboard":
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 else:
-    st.write("Sistema de recomendacion")
+        # Función para normalizar la entrada de texto
+    def normalize_input(input_string):
+        return re.sub(r'[^\w\s]','',input_string.lower())
+
+    # Crea secciones para cada tipo de entrada de datos
+    with st.form(key='my_form'):
+        
+        # Rango de años de experiencia
+        st.header("Rango de años de experiencia")
+        experiencia = st.select_slider("Selecciona el rango de años de experiencia que mejor se adapte a tus necesidades:", options=[0,1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
+
+        # Lenguajes
+        st.header("Lenguajes")
+        lenguajes = st.radio("Selecciona el lenguaje que prefieras entre los ofrecidos:", options=["Python", "SQL", "R","Java"])
+
+        # Habilidades
+        st.header("Habilidades")
+        habilidades = st.multiselect("Elige las habilidades que consideres más importantes según el perfil que te interesa:", options=["ETL", "Big Data", "Análisis estadístico", "Visualización de datos", "Data wrangling", "Modelos predictivos", "Cloud Computing", "Arquitectura"])
+
+        # Orientación profesional
+        st.header("Orientación profesional")
+        orientacion = st.selectbox("Selecciona la orientación profesional que te interesa entre las opciones disponibles:", options=["Tecnología", "Ciencias", "Finanzas", "Marketing", "Salud"])
+
+        # Idiomas recomendados
+        st.header("Idiomas recomendados")
+        idiomas = st.multiselect("Elige los idiomas que domines o en los que te sientas más cómodo trabajando:", options=["Inglés", "Español"])
+
+        # Herramientas
+        st.header("Herramientas")
+        herramientas = st.multiselect("Selecciona las herramientas que tengas experiencia utilizando:", options=["Jupyter Notebook", "Git", "Google Cloud", "Tableau", "PowerBI", "Hadoop", "Spark", "MongoDB", "Apache Airflow", "Apache NiFi", "Grafana", "Looker Studio", "Google Analytics", "QlikView"])
+
+        # Salario mínimo
+        st.header("Salario mínimo")
+        salario = st.slider("Elige el salario mínimo que te gustaría recibir:", min_value=1000, max_value=15000, step=500)
+
+      
+        # Añadimos un botón para ejecutar el código cuando el usuario termine de responder las preguntas
+        submit_button = st.form_submit_button(label='Buscar candidato')
+        perfiles = {
+    "Data Engineer trainee : ": {
+        "rango de años de experiencia": range(0,1),
+        "lenguajes": ["Python", "SQL"],
+        "habilidades": ["ETL", "Big Data"],
+        "orientacion profesional": ["Tecnología", "Ciencias", "Finanzas", "Marketing", "Salud"],
+         "idiomas recomendados": ["Inglés", "Español"],
+        "herramientas": ["Jupyter Notebook", "Git", "Google Cloud"],
+        "salario mínimo": [2500, 3000]
+    },
+        "Data Analyst trainee": {
+        "rango de años de experiencia": range(0,1),
+        "lenguajes": ["Python", "R", "SQL"],
+        "habilidades": ["Análisis estadístico", "Visualización de datos"],
+        "orientacion profesional": ["Tecnología", "Ciencias", "Finanzas", "Marketing", "Salud"],
+        "idiomas recomendados": ["Inglés", "Español"],
+        "herramientas": ["Jupyter Notebook", "Tableau", "PowerBI", ],
+        "salario mínimo": [2500, 3000]
+    },
+       "Data Scientist trainee": {
+        "rango de años de experiencia": range(0,1),
+        "lenguajes": ["Python", "R"],
+        "habilidades": ["Análisis de datos", "Estadística"],
+        "orientacion profesional": ["Tecnología", "Ciencias", "Finanzas", "Marketing", "Salud"],
+        "idiomas recomendados": ["Inglés", "Español"],
+        "herramientas": ["Jupyter Notebook", "Tableau", "PowerBI", "SQL",],
+        "salario mínimo": [2500, 3000]
+    },
+    "Data Engineer junior": {
+        "rango de años de experiencia": range(2,3),
+        "lenguajes": ["Python", "SQL"],
+        "habilidades": ["ETL", "Big Data", "webscripting"],
+        "orientacion profesional": ["Tecnología", "Ciencias", "Finanzas", "Marketing", "Salud"],
+         "idiomas recomendados": ["Inglés", "Español"],
+        "herramientas": ["Jupyter Notebook", "Hadoop","Git","Spark","MongoDB "],
+        "salario mínimo": [3500, 4000]
+    },
+    "Data Engineer semi-senior": {
+        "rango de años de experiencia": range(4, 5),
+        "lenguajes": ["Python", "SQL", "Java"],
+        "habilidades": ["ETL", "Big Data", "Cloud Computing"],
+        "orientacion profesional": ["Tecnología", "Ciencias", "Finanzas", "Marketing", "Salud"],
+         "idiomas recomendados": ["Inglés", "Español"],
+        "herramientas": ["Jupyter Notebook","Apache Airflow","MongoDB","Spark","Git","Hadoop","Google Cloud",],
+        "salario mínimo": [5000, 5500]
+    },
+    "Data Engineer senior": {
+        "rango de años de experiencia": range(6,10),
+        "lenguajes": ["Python", "SQL", "Java"],
+        "habilidades": ["ETL", "Big Data", "Cloud Computing", "Arquitectura"],
+        "orientacion profesional": ["Tecnología", "Ciencias", "Finanzas", "Marketing", "Salud"],
+         "idiomas recomendados": ["Inglés", "Español"],
+        "herramientas": ["Jupyter Notebook", "Grafana","Apache Airflow","Apache NiFi ","MongoDB","Spark","Git","Hadoop","Google Cloud",],
+        "salario mínimo": [8000, 10000]
+    },
+
+
+    "Data Analyst junior": {
+        "rango de años de experiencia": range(2,3),
+        "lenguajes": ["Python", "R", "SQL"],
+        "habilidades": ["Análisis estadístico", "Visualización de datos", "Data wrangling"],
+        "orientacion profesional": ["Tecnología", "Ciencias", "Finanzas", "Marketing", "Salud"],
+         "idiomas recomendados": ["Inglés", "Español"],
+        "herramientas": ["Jupyter Notebook", "Tableau", "PowerBI", "Looker Studio","Google Analytics"],
+        "salario mínimo": [3500, 4000]
+    },
+    "Data Analyst semi-senior": {
+        "rango de años de experiencia": range(4, 5),
+        "lenguajes": ["Python", "R", "SQL"],
+        "habilidades": ["Análisis estadístico", "Visualización de datos", "Data wrangling", "Modelos predictivos"],
+        "orientacion profesional": ["Tecnología", "Ciencias", "Finanzas", "Marketing", "Salud"],
+        "idiomas recomendados": ["Inglés", "Español"],
+        "herramientas": ["Jupyter Notebook", "Tableau", "PowerBI", "Looker Studio","Google Analytics","QlikView"],
+        "salario mínimo": [5000, 5500]
+    },
+    "Data Analyst senior": {
+        "rango de años de experiencia": range(6,10),
+        "lenguajes": ["Python", "R", "SQL"],
+        "habilidades": ["Análisis estadístico", "Visualización de datos", "Data wrangling", "Modelos predictivos", "Machine learning"],
+        "orientacion profesional": ["Tecnología", "Ciencias", "Finanzas", "Marketing", "Salud"],
+         "idiomas recomendados": ["Inglés", "Español"],
+        "herramientas": ["Jupyter Notebook", "Tableau", "PowerBI", "Looker Studio","Google Analytics","QlikView","spaCy","NLTK"],
+        "salario mínimo": [8000, 10000]
+    },
+    "Data Scientist trainee": {
+        "rango de años de experiencia": range(0,1),
+        "lenguajes": ["Python", "R","SQL"],
+        "habilidades": ["Análisis de datos", "Estadística"],
+        "orientacion profesional": ["Tecnología", "Ciencias", "Finanzas", "Marketing", "Salud"],
+         "idiomas recomendados": ["Inglés", "Español"],
+        "herramientas": ["Jupyter Notebook", "Tableau", "PowerBI","GitHub"],
+        "salario mínimo": [2500, 3000]
+    },
+    "Data Scientist junior": {
+        "rango de años de experiencia": range(2,3),
+        "lenguajes": ["Python", "R", "SQL"],
+        "habilidades": ["Análisis de datos", "Estadística", "Machine Learning"],
+        "orientacion profesional": ["Tecnología", "Ciencias", "Finanzas", "Marketing", "Salud"],
+        "idiomas recomendados": ["Inglés", "Español"],
+        "herramientas": ["Jupyter Notebook", "Tableau", "PowerBI", "MongoDB","Bitbucket","GitHub"],
+        "salario mínimo": [3500, 4000]
+        
+    },
+    "Data Scientist semi-senior": {
+        "rango de años de experiencia": range(4, 5),
+        "lenguajes": ["Python", "R", "SQL"],
+        "habilidades": ["Análisis de datos", "Estadística", "Machine Learning", "Visualización de datos"],
+        "orientacion profesional": ["Tecnología", "Ciencias", "Finanzas", "Marketing", "Salud"],
+         "idiomas recomendados": ["Inglés", "Español"],
+        "herramientas": ["Jupyter Notebook", "Tableau", "PowerBI", "MongoDB","Bitbucket","GitHub","AWS","Azure"],
+        "salario mínimo": [5000, 5500]
+    },
+    "Data Scientist senior": {
+        "rango de años de experiencia": range(6,10),
+        "lenguajes": ["Python", "R", "SQL"],
+        "habilidades": ["Análisis de datos", "Estadística", "Machine Learning", "Visualización de datos", "Investigación"],
+        "orientacion profesional": ["Tecnología", "Ciencias", "Finanzas", "Marketing", "Salud"],
+        "idiomas recomendados": ["Inglés", "Español"],
+        "herramientas": ["Jupyter Notebook", "Tableau", "PowerBI", "MongoDB","Bitbucket","GitHub","AWS","Azure","SPSS","SAS"],
+        "salario mínimo": [8000, 10000]
+    }
+}
+        
+        # Validar que el salario sea un número válido
+    mejor_match = None
+    puntaje_mejor_match = 0
+    perfil_similar = None
+    puntaje_perfil_similar = 0
+
+    for perfil, detalles in perfiles.items():
+        puntaje = 0
+
+        # Comparamos la experiencia
+        if experiencia and int(experiencia) in detalles.get("rango de años de experiencia", []):
+            puntaje += 1
+
+        # Comparamos los lenguajes
+        lenguajes_perfil = normalize_input(" ".join(detalles.get("lenguajes", [])))
+        for lenguaje in lenguajes.split():
+            if lenguaje in lenguajes_perfil:
+                puntaje += 1
+
+        habilidades_perfil = normalize_input(" ".join(detalles.get("habilidades", [])))
+        for habilidad in " ".join(habilidades).split():
+            if habilidad in habilidades_perfil:
+                puntaje += 1
+
+        # Comparamos la orientación profesional
+        orientacion_perfil = normalize_input(" ".join(detalles.get("orientacion profesional", [])))
+        for area in orientacion.split():
+            if area in orientacion_perfil:
+                puntaje += 1
+
+        # Comparamos el salario mínimo
+        salario_minimo = detalles.get("salario mínimo", [])
+        if len(salario_minimo) == 1:
+            if int(salario) >= salario_minimo[0]:
+                puntaje += 1
+        elif len(salario_minimo) == 2:
+            if salario_minimo[0] <= int(salario) <= salario_minimo[1]:
+                puntaje += 1
+
+        # Actualizamos el mejor match si este puntaje es mayor que el anterior
+        if puntaje > puntaje_mejor_match:
+            mejor_match = perfil
+            puntaje_mejor_match = puntaje
+        elif puntaje > puntaje_perfil_similar:
+            perfil_similar = perfil
+            puntaje_perfil_similar = puntaje
+                
+    if puntaje_mejor_match == 0:
+        # Si no hay ningún perfil que cumpla con los requisitos exactos, usamos el perfil más similar
+        st.write(f"No se encontró ningún perfil que cumpla exactamente con los requisitos. Se recomienda el perfil '{perfil_similar}' que tiene {puntaje_perfil_similar} puntos de coincidencia con los requisitos proporcionados.")
+
+    else:
+        perfil_recomendado = perfiles[mejor_match]
+        st.subheader(f"El perfil recomendado es '{mejor_match}' que cumple con los requisitos proporcionados para el puesto. Este perfil tiene las siguientes características:")
+        st.subheader(f"Años de experiencia: {perfil_recomendado['rango de años de experiencia']}")
+        st.subheader(f"Lenguajes de programación: {', '.join(perfil_recomendado['lenguajes']).replace('[','').replace(']','').replace('(','').replace(')','')}")
+        st.subheader(f"Habilidades: {', '.join(perfil_recomendado['habilidades']).replace('[','').replace(']','').replace('(','').replace(')','')}")
+        st.subheader(f"Orientación profesional: {', '.join(perfil_recomendado['orientacion profesional']).replace('[','').replace(']','').replace('(','').replace(')','')}")
+        st.subheader(f"Salario mínimo: {', '.join(map(str, perfil_recomendado['salario mínimo'])).replace('[','').replace(']','')}")
+
 
 menuu=('Proyecto', 'back end')
 seleccion=st.sidebar.selectbox('Nosotros', menuu )
