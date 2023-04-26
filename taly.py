@@ -546,6 +546,14 @@ elif seleccion == "Dashboard":
 
     
 
+
+
+
+
+    
+
+
+
     col1, col2, col3 = st.columns(3)
     periodo = ""
 
@@ -562,241 +570,283 @@ elif seleccion == "Dashboard":
     if periodo == "seleccione 6 meses":
         with col1:
             st.empty()
-            st.metric("PERIODO", str(postulaciones["6 meses"]) + " MESES", delta=" (+0%)", delta_color="normal")
+            st.metric("BENEFICIO", str("") + " ", delta="+0%", delta_color="normal")
             st.markdown("<p style='font-size: 18px; font-weight: bold;'><h5>CANTIDAD DE POSTULACIONES</h5></p>", unsafe_allow_html=True)
 
-        color_map = {"remoto_e": "red", "onsite_e": "lightgreen", "hybrid_e": "lightblue",
-             "DATA ENGINEER": "blue", "remoto_a": "red", "onsite_a": "lightgreen",
-             "hybrid_a": "lightblue", "DATA ANALYTIC": "blue", "remoto_s": "red",
-             "onsite_s": "lightgreen", "hybrid_s": "lightblue", "DATA SCIENCE": "blue"}
+                   # Convertir el diccionario en un DataFrame de pandas
+        # Definimos los datos
+        dict_1_mes = {'remoto_e': 17, 'onsite_e': 20, 'hybrid_e': 4, 'DATA ENGINEER': 38, 'remoto_a': 4, 'onsite_a': 12, 'hybrid_a': 9, 'DATA ANALYTIC': 26, 'remoto_s': 4, 'onsite_s': 2, 'hybrid_s': 4, 'DATA SCIENCE': 12}
+        dict_3_meses = {'remoto_e': 24, 'onsite_e': 31, 'hybrid_e': 6, 'DATA ENGINEER': 48, 'remoto_a': 6, 'onsite_a': 18, 'hybrid_a': 12, 'DATA ANALYTIC': 37, 'remoto_s': 6, 'onsite_s': 3, 'hybrid_s': 6, 'DATA SCIENCE': 18}
+        dict_6_meses = {'remoto_e': 38, 'onsite_e': 33, 'hybrid_e': 10, 'DATA ENGINEER': 57, 'remoto_a': 10, 'onsite_a': 19, 'hybrid_a': 14, 'DATA ANALYTIC': 38, 'remoto_s': 9, 'onsite_s': 5, 'hybrid_s': 9, 'DATA SCIENCE': 24}
 
+        # Preparamos los datos para el gráfico
+        y_labels = ['DATA ENGINEER', 'DATA ANALYTIC', 'DATA SCIENCE']
+        x_remoto = [dict_1_mes['remoto_e'], dict_1_mes['remoto_a'], dict_1_mes['remoto_s']]
+        x_onsite = [dict_1_mes['onsite_e'], dict_1_mes['onsite_a'], dict_1_mes['onsite_s']]
+        x_hybrid = [dict_1_mes['hybrid_e'], dict_1_mes['hybrid_a'], dict_1_mes['hybrid_s']]
 
-        dict_6_meses = {
-            "remoto_e": 40,
-            "onsite_e": 35,
-            "hybrid_e": 10,
-            "DATA ENGINEER": 60,
-            "remoto_a": 10,
-            "onsite_a": 20,
-            "hybrid_a": 15,
-            "DATA ANALYTIC": 40,
-            "remoto_s": 10,
-            "onsite_s": 5,
-            "hybrid_s": 10,
-            "DATA SCIENCE": 25
-        }
+        # Creamos la figura
+        fig = go.Figure()
+        fig.add_trace(go.Bar(x=x_remoto, y=y_labels, name='Remoto', marker_color='purple', orientation='h'))
+        fig.add_trace(go.Bar(x=x_onsite, y=y_labels, name='Onsite', marker_color='orange', orientation='h'))
+        fig.add_trace(go.Bar(x=x_hybrid, y=y_labels, name='Hybrid', marker_color='grey', orientation='h'))
 
-        # Convertir el diccionario en un DataFrame de pandas
-        df = pd.DataFrame.from_dict(dict_6_meses, orient='index', columns=['Vacantes_cubiertas'])
+        # Ajustamos la presentación del gráfico
+        fig.update_layout(title='Evolución de posiciones en los últimos 6 meses', yaxis_title='Modalidad', xaxis_title='Posiciones')
+        fig.update_xaxes(range=[0, 30])
+        # Definimos los datos
+        dict_6_meses = {'DATA ENGINEER': 41, 'DATA ANALYTIC': 24, 'DATA SCIENCE': 9}
 
-        # Agregar la columna de perfiles
-        df['Perfiles'] = df.index
+        labels = list(dict_6_meses.keys())
+        values = list(dict_6_meses.values())
 
-        # Calcular el porcentaje de crecimiento desde los 6 meses hasta la actualidad
-        df['Crecimiento'] = (df['Vacantes_cubiertas'] * 1.2) / df.loc['DATA ENGINEER', 'Vacantes_cubiertas']
+        fig2 = go.Figure(data=[go.Pie(labels=labels, values=values, hole=.5)])
 
-        # Graficar los datos
-        fig = px.bar(df, x='Vacantes_cubiertas', y='Perfiles', color='Perfiles', color_discrete_map=color_map)
+        fig2.update_layout(title='Puestos en los últimos 6 meses',
+                        annotations=[dict(text='Total', x=0.5, y=0.5, font_size=20, showarrow=False)])
+      
+        # Mostramos el gráfico en Streamlit
+        col1,col2= st.columns(2)
+        col1.plotly_chart(fig)
 
-        # Establecer el rango de medición del eje x
-        fig.update_xaxes(range=[0, 80])
-
-        fig.update_layout(
-            title="VACANTES CUBIERTAS",
-            xaxis_title="Vacantes cubiertas",
-            yaxis_title="Perfiles Data",
-            font=dict(size=14),
-            showlegend=False,
-            width=500,
-            height=350,
-            margin=dict(t=25, b=100, l=100, r=10)
-        )
+        col2.plotly_chart(fig2)
 
         
-        df = pd.DataFrame(dict(
-            Perfiles = ["remoto_e", "onsite_e", "hybrid_e","DATA ENGINEER", "remoto_a", "onsite_a", "hybrid_a", "DATA ANALYTIC","remoto_s", "onsite_s", "hybrid_s","DATA SCIENCE"],
-            Vacantes_vigentes = [2,3,5,10,5,3,7,15,2,1,2,5 ]))
+                # Preparamos los datos para el gráfico
+        y_labels = ['DATA ENGINEER', 'DATA ANALYTIC', 'DATA SCIENCE']
+        dict_1_mes = {
+            'remoto_e': 2,
+            'remoto_a': 5,
+            'remoto_s': 1,
+            'onsite_e': 3,
+            'onsite_a': 7,
+            'onsite_s': 2,
+            'hybrid_e': 5,
+            'hybrid_a': 3,
+            'hybrid_s': 2
+        }
+                # Preparamos los datos para el gráfico
+        y_labels = ['DATA ENGINEER', 'DATA ANALYTIC', 'DATA SCIENCE']
+        x_remoto = [dict_1_mes['remoto_e'], dict_1_mes['remoto_a'], dict_1_mes['remoto_s']]
+        x_onsite = [dict_1_mes['onsite_e'], dict_1_mes['onsite_a'], dict_1_mes['onsite_s']]
+        x_hybrid = [dict_1_mes['hybrid_e'], dict_1_mes['hybrid_a'], dict_1_mes['hybrid_s']]
 
+        # Creamos la figura
+        fig1 = go.Figure()
+        fig1.add_trace(go.Bar(x=x_remoto, y=y_labels, name='Remoto', marker_color='purple', orientation='h'))
+        fig1.add_trace(go.Bar(x=x_onsite, y=y_labels, name='Onsite', marker_color='orange', orientation='h'))
+        fig1.add_trace(go.Bar(x=x_hybrid, y=y_labels, name='Hybrid', marker_color='grey', orientation='h'))
+
+        # Ajustamos la presentación del gráfico
+        fig1.update_layout(title='Evolución de posiciones en los últimos 6 meses', yaxis_title='Modalidad', xaxis_title='Posiciones')
+        fig1.update_xaxes(range=[0, 30])
+        dict_6_meses = {'DATA ENGINEER': 10, 'DATA ANALYTIC': 15, 'DATA SCIENCE': 5}
+
+        labels = list(dict_6_meses.keys())
+        values = list(dict_6_meses.values())
+
+        fig2 = go.Figure(data=[go.Pie(labels=labels, values=values, hole=.5)])
+
+        fig2.update_layout(title='Puestos vigentes',
+                        annotations=[dict(text='Total', x=0.5, y=0.5, font_size=20, showarrow=False)])
       
-        fig1 = px.bar(df, x='Vacantes_vigentes', y='Perfiles', color='Perfiles', color_discrete_map=color_map)
-
-        # Establecer el rango de medición del eje x
-        fig1.update_xaxes(range=[0, 60])
-
-        fig1.update_layout(
-            title="VACANTES VIGENTES",
-            xaxis_title="Vacantes vigentes",
-            yaxis_title="Perfiles Data",
-            font=dict(size=14),
-            showlegend=False,
-            width=500,
-            height=350,
-            margin=dict(t=25, b=100, l=100, r=10)
-        )
-
+        # Mostramos el gráfico en Streamlit
         col1, col2 =st.columns(2)
-        col1.plotly_chart(fig)
-        col2.plotly_chart(fig1)
+        col2.plotly_chart(fig2)
+        col1.plotly_chart(fig1)
 
     elif periodo == "seleccione 3 meses":
         with col2:
             st.empty()
-            st.metric("PERIODO", str(postulaciones["3 meses"]) + " MESES", delta=" (+30%)", delta_color="normal")
+            st.metric("BENEFICIO", str("") + " ", delta="+30%", delta_color="normal")
             st.markdown("<p style='font-size: 18px; font-weight: bold;'><h5>CANTIDAD DE POSTULACIONES</h5></p>", unsafe_allow_html=True)
 
-        color_map = {"remoto_e": "red", "onsite_e": "lightgreen", "hybrid_e": "lightblue",
-             "DATA ENGINEER": "blue", "remoto_a": "red", "onsite_a": "lightgreen",
-             "hybrid_a": "lightblue", "DATA ANALYTIC": "blue", "remoto_s": "red",
-             "onsite_s": "lightgreen", "hybrid_s": "lightblue", "DATA SCIENCE": "blue"}
+        
+            # Definimos los datos
+        dict_1_mes = {'remoto_e': 18, 'onsite_e': 22, 'hybrid_e': 4, 'DATA ENGINEER': 40, 'remoto_a': 4, 'onsite_a': 13, 'hybrid_a': 9, 'DATA ANALYTIC': 27, 'remoto_s': 4, 'onsite_s': 2, 'hybrid_s': 4, 'DATA SCIENCE': 13}
+        dict_3_meses = {'remoto_e': 26, 'onsite_e': 33, 'hybrid_e': 6, 'DATA ENGINEER': 50, 'remoto_a': 6, 'onsite_a': 19, 'hybrid_a': 13, 'DATA ANALYTIC': 39, 'remoto_s': 6, 'onsite_s': 3, 'hybrid_s': 6, 'DATA SCIENCE': 19}
+        dict_6_meses = {'remoto_e': 40, 'onsite_e': 35, 'hybrid_e': 10, 'DATA ENGINEER': 60, 'remoto_a': 10, 'onsite_a': 20, 'hybrid_a': 15, 'DATA ANALYTIC': 40, 'remoto_s': 10, 'onsite_s': 5, 'hybrid_s': 10, 'DATA SCIENCE': 25}
 
+        # Preparamos los datos para el gráfico
+        y_labels = ['DATA ENGINEER', 'DATA ANALYTIC', 'DATA SCIENCE']
+        x_remoto = [dict_1_mes['remoto_e'], dict_1_mes['remoto_a'], dict_1_mes['remoto_s']]
+        x_onsite = [dict_1_mes['onsite_e'], dict_1_mes['onsite_a'], dict_1_mes['onsite_s']]
+        x_hybrid = [dict_1_mes['hybrid_e'], dict_1_mes['hybrid_a'], dict_1_mes['hybrid_s']]
 
-        dict_3_meses = {
-            'remoto_e': 26,
-            'onsite_e': 33,
-            'hybrid_e': 6,
-            'DATA ENGINEER': 50,
-            'remoto_a': 6,
-            'onsite_a': 19,
-            'hybrid_a': 13,
-            'DATA ANALYTIC': 39,
-            'remoto_s': 6,
-            'onsite_s': 3,
-            'hybrid_s': 6,
-            'DATA SCIENCE': 19}
+        # Creamos la figura
+        fig = go.Figure()
+        fig.add_trace(go.Bar(x=x_remoto, y=y_labels, name='Remoto', marker_color='purple', orientation='h'))
+        fig.add_trace(go.Bar(x=x_onsite, y=y_labels, name='Onsite', marker_color='orange', orientation='h'))
+        fig.add_trace(go.Bar(x=x_hybrid, y=y_labels, name='Hybrid', marker_color='grey', orientation='h'))
 
-        # Convertir el diccionario en un DataFrame de pandas
-        df = pd.DataFrame.from_dict(dict_3_meses, orient='index', columns=['Vacantes_cubiertas'])
+        # Ajustamos la presentación del gráfico
+        fig.update_layout(title='Evolución de posiciones en los últimos 6 meses', yaxis_title='Modalidad', xaxis_title='Posiciones')
+        fig.update_xaxes(range=[0, 30])
+        dict_6_meses = {'DATA ENGINEER': 44, 'DATA ANALYTIC': 26, 'DATA SCIENCE': 12}
 
-        # Agregar la columna de perfiles
-        df['Perfiles'] = df.index
+        labels = list(dict_6_meses.keys())
+        values = list(dict_6_meses.values())
 
-        # Calcular el porcentaje de crecimiento desde los 6 meses hasta la actualidad
-        df['Crecimiento'] = (df['Vacantes_cubiertas'] * 1.2) / df.loc['DATA ENGINEER', 'Vacantes_cubiertas']
+        fig2 = go.Figure(data=[go.Pie(labels=labels, values=values, hole=.5)])
 
-        # Graficar los datos
-        fig = px.bar(df, x='Vacantes_cubiertas', y='Perfiles', color='Perfiles', color_discrete_map=color_map)
-
-        # Establecer el rango de medición del eje x
-        fig.update_xaxes(range=[0, 80])
-
-        fig.update_layout(
-            title="VACANTES CUBIERTAS",
-            xaxis_title="Vacantes cubiertas",
-            yaxis_title="Perfiles Data",
-            font=dict(size=14),
-            showlegend=False,
-            width=500,
-            height=350,
-            margin=dict(t=25, b=100, l=100, r=10)
-        )
-
-       
-        df = pd.DataFrame(dict(
-            Perfiles = ["remoto_e", "onsite_e", "hybrid_e","DATA ENGINEER", "remoto_a", "onsite_a", "hybrid_a", "DATA ANALYTIC","remoto_s", "onsite_s", "hybrid_s","DATA SCIENCE"],
-            Vacantes_vigentes = [2,3,5,10,5,3,7,15,2,1,2,5 ]))
-
+        fig2.update_layout(title='Cantidad de vacantes en 3 meses',
+                        annotations=[dict(text='Total', x=0.5, y=0.5, font_size=20, showarrow=False)])
       
-        fig1 = px.bar(df, x='Vacantes_vigentes', y='Perfiles', color='Perfiles', color_discrete_map=color_map)
+        # Mostramos el gráfico en Streamlit
+        col1,col2= st.columns(2)
+        col1.plotly_chart(fig, use_container_width=True)
 
-        # Establecer el rango de medición del eje x
-        fig1.update_xaxes(range=[0, 60])
+        col2.plotly_chart(fig2, use_container_width=True)
+       
+        
+        # Preparamos los datos para el gráfico
+        y_labels = ['DATA ENGINEER', 'DATA ANALYTIC', 'DATA SCIENCE']
+        dict_1_mes = {
+            'remoto_e': 2,
+            'remoto_a': 5,
+            'remoto_s': 1,
+            'onsite_e': 3,
+            'onsite_a': 7,
+            'onsite_s': 2,
+            'hybrid_e': 5,
+            'hybrid_a': 3,
+            'hybrid_s': 2
+        }
+        
+        # Preparamos los datos para el gráfico
+        y_labels = ['DATA ENGINEER', 'DATA ANALYTIC', 'DATA SCIENCE']
+        x_remoto = [dict_1_mes['remoto_e'], dict_1_mes['remoto_a'], dict_1_mes['remoto_s']]
+        x_onsite = [dict_1_mes['onsite_e'], dict_1_mes['onsite_a'], dict_1_mes['onsite_s']]
+        x_hybrid = [dict_1_mes['hybrid_e'], dict_1_mes['hybrid_a'], dict_1_mes['hybrid_s']]
 
-        fig1.update_layout(
-            title="VACANTES VIGENTES",
-            xaxis_title="Vacantes vigentes",
-            yaxis_title="Perfiles Data",
-            font=dict(size=14),
-            showlegend=False,
-            width=500,
-            height=350,
-            margin=dict(t=25, b=100, l=100, r=10)
-        )
+        # Creamos la figura
+        fig1 = go.Figure()
+        fig1.add_trace(go.Bar(x=x_remoto, y=y_labels, name='Remoto', marker_color='purple', orientation='h'))
+        fig1.add_trace(go.Bar(x=x_onsite, y=y_labels, name='Onsite', marker_color='orange', orientation='h'))
+        fig1.add_trace(go.Bar(x=x_hybrid, y=y_labels, name='Hybrid', marker_color='grey', orientation='h'))
 
+        # Ajustamos la presentación del gráfico
+        fig1.update_layout(title='Evolución de posiciones en los últimos 6 meses', yaxis_title='Modalidad', xaxis_title='Posiciones')
+        fig1.update_xaxes(range=[0, 30])
+        dict_6_meses = {'DATA ENGINEER': 10, 'DATA ANALYTIC': 15, 'DATA SCIENCE': 5}
+
+        labels = list(dict_6_meses.keys())
+        values = list(dict_6_meses.values())
+
+        fig2 = go.Figure(data=[go.Pie(labels=labels, values=values, hole=.5)])
+
+        fig2.update_layout(title='cantidad de vacantes vigentes segun perfil',
+                        annotations=[dict(text='Total', x=0.5, y=0.5, font_size=20, showarrow=False)])
+      
+        # Mostramos el gráfico en Streamlit
         col1, col2 =st.columns(2)
-        col1.plotly_chart(fig)
-        col2.plotly_chart(fig1)
+        col2.plotly_chart(fig2)
+        col1.plotly_chart(fig1)
+        
 
 
     elif periodo == "seleccione 1 mes":
         with col3:
             st.empty()
-            st.metric("PERIODO", str(postulaciones["1 mes"]) + " MESES", delta=" (+50%)", delta_color="normal")
+            st.metric("BENEFICIO", str("") + " ", delta="+50%", delta_color="normal")
             st.markdown("<p style='font-size: 18px; font-weight: bold;'><h5>CANTIDAD DE POSTULACIONES</h5></p>", unsafe_allow_html=True)
         
 
-        color_map = {"remoto_e": "red", "onsite_e": "lightgreen", "hybrid_e": "lightblue",
-             "DATA ENGINEER": "blue", "remoto_a": "red", "onsite_a": "lightgreen",
-             "hybrid_a": "lightblue", "DATA ANALYTIC": "blue", "remoto_s": "red",
-             "onsite_s": "lightgreen", "hybrid_s": "lightblue", "DATA SCIENCE": "blue"}
+        # Definimos los datos
+        dict_1_mes = {'remoto_e': 17, 'onsite_e': 20, 'hybrid_e': 4, 'DATA ENGINEER': 37, 'remoto_a': 4, 'onsite_a': 12, 'hybrid_a': 8, 'DATA ANALYTIC': 25, 'remoto_s': 4, 'onsite_s': 1, 'hybrid_s': 4, 'DATA SCIENCE': 12}
+        dict_3_meses = {'remoto_e': 24, 'onsite_e': 31, 'hybrid_e': 5, 'DATA ENGINEER': 47, 'remoto_a': 5, 'onsite_a': 18, 'hybrid_a': 12, 'DATA ANALYTIC': 36, 'remoto_s': 5, 'onsite_s': 3, 'hybrid_s': 5, 'DATA SCIENCE': 18}
+        dict_6_meses = {'remoto_e': 37, 'onsite_e': 32, 'hybrid_e': 9, 'DATA ENGINEER': 56, 'remoto_a': 9, 'onsite_a': 19, 'hybrid_a': 14, 'DATA ANALYTIC': 37, 'remoto_s': 9, 'onsite_s': 4, 'hybrid_s': 9, 'DATA SCIENCE': 23}
 
+        # Preparamos los datos para el gráfico
+        y_labels = ['DATA ENGINEER', 'DATA ANALYTIC', 'DATA SCIENCE']
+        x_remoto = [dict_1_mes['remoto_e'], dict_1_mes['remoto_a'], dict_1_mes['remoto_s']]
+        x_onsite = [dict_1_mes['onsite_e'], dict_1_mes['onsite_a'], dict_1_mes['onsite_s']]
+        x_hybrid = [dict_1_mes['hybrid_e'], dict_1_mes['hybrid_a'], dict_1_mes['hybrid_s']]
 
+        # Creamos la figura
+        fig = go.Figure()
+        fig.add_trace(go.Bar(x=x_remoto, y=y_labels, name='Remoto', marker_color='purple', orientation='h'))
+        fig.add_trace(go.Bar(x=x_onsite, y=y_labels, name='Onsite', marker_color='orange', orientation='h'))
+        fig.add_trace(go.Bar(x=x_hybrid, y=y_labels, name='Hybrid', marker_color='grey', orientation='h'))
 
-        dict_1_mes = {
-            'remoto_e': 18,
-            'onsite_e': 22,
-            'hybrid_e': 4,
-            'DATA ENGINEER': 40,
-            'remoto_a': 4,
-            'onsite_a': 13,
-            'hybrid_a': 9,
-            'DATA ANALYTIC': 27,
-            'remoto_s': 4,
-            'onsite_s': 2,
-            'hybrid_s': 4,
-            'DATA SCIENCE': 13}
+        # Ajustamos la presentación del gráfico
+        fig.update_layout(title='Evolución de posiciones en lo último  mes', yaxis_title='Modalidad', xaxis_title='Posiciones')
+        fig.update_xaxes(range=[0, 30])
+        # Definimos los datos
         
 
-        # Convertir el diccionario en un DataFrame de pandas
-        df = pd.DataFrame.from_dict(dict_1_mes, orient='index', columns=['Vacantes_cubiertas'])
+   
+        dict_6_meses = {'DATA ENGINEER': 41, 'DATA ANALYTIC': 24, 'DATA SCIENCE': 9}
 
-        # Agregar la columna de perfiles
-        df['Perfiles'] = df.index
+        labels = list(dict_6_meses.keys())
+        values = list(dict_6_meses.values())
 
-        # Calcular el porcentaje de crecimiento desde los 6 meses hasta la actualidad
-        df['Crecimiento'] = (df['Vacantes_cubiertas'] * 1.2) / df.loc['DATA ENGINEER', 'Vacantes_cubiertas']
+        fig2 = go.Figure(data=[go.Pie(labels=labels, values=values, hole=.5)])
 
-        # Graficar los datos
-        fig = px.bar(df, x='Vacantes_cubiertas', y='Perfiles', color='Perfiles', color_discrete_map=color_map)
+        fig2.update_layout(title='Puestos en los últimos 6 meses',
+                        annotations=[dict(text='Total', x=0.5, y=0.5, font_size=20, showarrow=False)])
+        # Mostramos el gráfico en Streamlit
+        col1,col2= st.columns(2)
+        col1.plotly_chart(fig, use_container_width=True)
 
-        # Establecer el rango de medición del eje x
-        fig.update_xaxes(range=[0, 80])
-
-        fig.update_layout(
-            title="VACANTES CUBIERTAS",
-            xaxis_title="Vacantes cubiertas",
-            yaxis_title="Perfiles Data",
-            font=dict(size=14),
-            showlegend=False,
-            width=500,
-            height=350,
-            margin=dict(t=25, b=100, l=100, r=10)
-        )
+        col2.plotly_chart(fig2)
 
        
+        # Creamos el DataFrame con los datos
         df = pd.DataFrame(dict(
             Perfiles = ["remoto_e", "onsite_e", "hybrid_e","DATA ENGINEER", "remoto_a", "onsite_a", "hybrid_a", "DATA ANALYTIC","remoto_s", "onsite_s", "hybrid_s","DATA SCIENCE"],
             Vacantes_vigentes = [2,3,5,10,5,3,7,15,2,1,2,5 ]))
 
+        # Preparamos los datos para el gráfico
+        y_labels = ['DATA ENGINEER', 'DATA ANALYTIC', 'DATA SCIENCE']
+        dict_1_mes = {
+            'remoto_e': 2,
+            'remoto_a': 5,
+            'remoto_s': 1,
+            'onsite_e': 3,
+            'onsite_a': 7,
+            'onsite_s': 2,
+            'hybrid_e': 5,
+            'hybrid_a': 3,
+            'hybrid_s': 2
+        }
+        x_remoto = [dict_1_mes['remoto_e'], dict_1_mes['remoto_a'], dict_1_mes['remoto_s']]
+        x_onsite = [dict_1_mes['onsite_e'], dict_1_mes['onsite_a'], dict_1_mes['onsite_s']]
+        x_hybrid = [dict_1_mes['hybrid_e'], dict_1_mes['hybrid_a'], dict_1_mes['hybrid_s']]
+
+        # Creamos la figura
+        fig1 = go.Figure()
+        fig1.add_trace(go.Bar(x=x_remoto, y=y_labels, name='Remoto', marker_color='purple', orientation='h'))
+        fig1.add_trace(go.Bar(x=x_onsite, y=y_labels, name='Onsite', marker_color='orange', orientation='h'))
+        fig1.add_trace(go.Bar(x=x_hybrid, y=y_labels, name='Hybrid', marker_color='grey', orientation='h'))
+
+        # Ajustamos la presentación del gráfico
+        fig1.update_layout(title='vancantes vigentes segun modalidad', yaxis_title='Modalidad', xaxis_title='Posiciones')
+        fig1.update_xaxes(range=[0, 30])
+        # Definimos los datos
+        dict_6_meses = {'DATA ENGINEER': 10, 'DATA ANALYTIC': 15, 'DATA SCIENCE': 5}
+
+        labels = list(dict_6_meses.keys())
+        values = list(dict_6_meses.values())
+
+        fig2 = go.Figure(data=[go.Pie(labels=labels, values=values, hole=.5)])
+
+        fig2.update_layout(title='cantidad de vacantes vigentes segun perfil',
+                        annotations=[dict(text='Total', x=0.5, y=0.5, font_size=20, showarrow=False)])
       
-        fig1 = px.bar(df, x='Vacantes_vigentes', y='Perfiles', color='Perfiles', color_discrete_map=color_map)
-
-        # Establecer el rango de medición del eje x
-        fig1.update_xaxes(range=[0, 60])
-
-        fig1.update_layout(
-            title="VACANTES VIGENTES",
-            xaxis_title="Vacantes vigentes",
-            yaxis_title="Perfiles Data",
-            font=dict(size=14),
-            showlegend=False,
-            width=500,
-            height=350,
-            margin=dict(t=25, b=100, l=100, r=10)
-        )
-
+        # Mostramos el gráfico en Streamlit
         col1, col2 =st.columns(2)
-        col1.plotly_chart(fig)
-        col2.plotly_chart(fig1)
+        col2.plotly_chart(fig2)
+        col1.plotly_chart(fig1)
+
+
+        
+
+
+
+
+
+
 
     
     st.markdown("<div style='text-align: center;'><h1 style='color: #FF8C00;'>TIEMPO PROMEDIO DE CONTRATACIONES</h1></div>", unsafe_allow_html=True)
@@ -1442,27 +1492,116 @@ if seleccion == "Dashboard interno":
                 # Aquí se puede agregar el código para generar y mostrar el gráfico
                 df_contrataciones = pd.DataFrame({
                     "Meses": ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio"],
-                    "Antes del servicio": [50, 75, 100, 125, 150, 175],
-                    "Con servicio": [75, 100, 125, 150, 175, 200]
+                    "Antes del servicio": [22,40, 50, 63, 50, 51],
+                    "Con servicio": [30, 50, 68, 90, 85, 100]
                 })
                 fig_contrataciones = px.line(df_contrataciones, x="Meses", y=["Antes del servicio", "Con servicio"], title="Comparación de contrataciones")
                 st.plotly_chart(fig_contrataciones)         
             if col2.button("selecione2"):
-                st.subheader("Contrataciones antes del servicio - Contrataciones actuales con servicio = Beneficio de servicio en contrataciones")
+                st.subheader(" cantidad de postulantes a la vacante - cantidad de postulantes con el perfil adecuado/cantidad de postulantes que pasan a ser entrevistados por la empresa")
+
+                dict_6_meses = {'NO APTOS': 66, 'APTOS': 20}
+
+                labels = list(dict_6_meses.keys())
+                values = list(dict_6_meses.values())
+
+                fig1 = go.Figure(data=[go.Pie(labels=labels, 
+                                            values=values, 
+                                            hole=0.5, 
+                                            marker=dict(colors=['red']))])
+
+                fig1.update_layout(title='Aspirantes antes del Modelo Taly', 
+                annotations=[dict(text='Total', x=0.5, y=0.5, font_size=20, showarrow=False)])
+
+                
+
+                dict_6_meses = {'NO APTOS': 7, 'APTOS': 40}
+
+                labels = list(dict_6_meses.keys())
+                values = list(dict_6_meses.values())
+
+                fig = go.Figure(data=[go.Pie(labels=labels, 
+                                            values=values, 
+                                            hole=0.5, 
+                                            marker=dict(colors=['red']))])
+
+                fig.update_layout(title='Aspirantes despues del Modelo Taly', 
+                annotations=[dict(text='Total', x=0.5, y=0.5, font_size=20, showarrow=False)])
+                
+                col1,col2=st.columns(2)
+                col1.plotly_chart(fig1)
+                col2.plotly_chart(fig)
+              
+            
+            if col3.button("selecione3"):
+                st.subheader("((Número de empleados al final del periodo - Número de empleados que dejaron la empresa durante el periodo) / Número de empleados al inicio del periodo)) x 100")
                 # Aquí se puede agregar el código para generar y mostrar el gráfico
                 df_contrataciones = pd.DataFrame({
-                    "Meses": ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio"],
-                    "Antes del servicio": [2, 1, 2, 3, 2, 1],
-                    "Con servicio": [3, 5, 5, 6, 8, 10]
+                    "Meses": ["Enero", "Marzo", "Mayo","Julio", "Septiembre", "Nobiembre"],
+                    "Antes del servicio": [20, 20, 20, 40, 50, 60],
+                    "Con servicio": [30, 50, 60, 60, 75, 90]
                 })
                 fig_contrataciones = px.line(df_contrataciones, x="Meses", y=["Antes del servicio", "Con servicio"], title="Medicion de parametros 6 meses en comparacion antes y despues de Taly ")
-                st.plotly_chart(fig_contrataciones) 
-            if col3.button("selecione3"):
-                periodo = "kpi 3"
+                st.plotly_chart(fig_contrataciones)
             if col4.button("selecione4"):
-                periodo = "kpi 4"
+                st.subheader("(Número total de días transcurridos en el proceso de contratación) / (Número total de contrataciones)")
+
+                df= pd.DataFrame(dict(
+                Perfiles = 'Tiempo',
+                Vacantes_vigentes = [10 ]))
+
+                
+                fig1 = px.bar(df, x='Vacantes_vigentes', y='Perfiles')
+
+                # Establedfcer el rango de medición del eje x
+                fig1.update_xaxes(range=[0, 100])
+
+                fig1.update_layout(
+                    title="TIEMPO PROMEDIO DE CONTRATACION",
+                    xaxis_title="Periodo en dias",
+                    yaxis_title="Tiempo",
+                    font=dict(size=14),
+                    showlegend=False,
+                    width=500,
+                    height=350,
+                    margin=dict(t=170, b=100, l=100, r=10)
+                )
+                df= pd.DataFrame(dict(
+                Perfiles = 'Tiempo',
+                Vacantes_vigentes = [45 ]))
+
+                
+                fig = px.bar(df, x='Vacantes_vigentes', y='Perfiles', color_discrete_sequence=['lightgreen'])
+
+                # Establedfcer el rango de medición del eje x
+                fig.update_xaxes(range=[0, 100])
+
+                fig.update_layout(
+                    title="TIEMPO PROMEDIO DE CONTRATACION ACTUALMENTE",
+                    xaxis_title="Periodo en dias",
+                    yaxis_title="Tiempo",
+                    font=dict(size=14),
+                    showlegend=False,
+                    width=500,
+                    height=350,
+                    margin=dict(t=170, b=100, l=100, r=10)
+                )
+                col1, col2 =st.columns(2)
+                col1.plotly_chart(fig1)
+                col2.plotly_chart(fig)
             if col5.button("selecione5"):
-                periodo = "kpi 5"
+                st.subheader("(Costo total de contratación) / (Número de nuevos empleados contratados) ")
+                # Aquí se puede agregar el código para generar y mostrar el gráfico
+                df_contrataciones = pd.DataFrame({
+                    "Meses": ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio","julio", "Agosto", "Septiembre","Octubre", "Nobiembre", "Diciembre"],
+                    "Antes del servicio": [1000,1200,800, 900,1000,800,900,800,1000,1100,800,700],
+                    "Con servicio": [700, 750, 700, 650, 600, 550,540,530,490,490,490,490]
+                })
+                fig_contrataciones = px.line(df_contrataciones, x="Meses", y=["Antes del servicio", "Con servicio"], title="Comparación de contrataciones")
+                st.plotly_chart(fig_contrataciones)   
+
+
+
 
     elif empresa_seleccionada == "CloudMinds":
         col1, col2, col3,col4,col5 = st.columns(5)
@@ -1497,27 +1636,107 @@ if seleccion == "Dashboard interno":
                 # Aquí se puede agregar el código para generar y mostrar el gráfico
                 df_contrataciones = pd.DataFrame({
                     "Meses": ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio"],
-                    "Antes del servicio": [50, 75, 100, 125, 150, 175],
-                    "Con servicio": [75, 100, 125, 150, 175, 200]
+                    "Antes del servicio": [6,12,17, 17, 12,15],
+                    "Con servicio": [12, 14, 16, 25, 33, 48]
                 })
                 fig_contrataciones = px.line(df_contrataciones, x="Meses", y=["Antes del servicio", "Con servicio"], title="Comparación de contrataciones")
                 st.plotly_chart(fig_contrataciones)         
             if col2.button("selecione2"):
+                dict_6_meses = {'NO APTOS': 100, 'APTOS': 33}
+
+                labels = list(dict_6_meses.keys())
+                values = list(dict_6_meses.values())
+
+                fig1 = go.Figure(data=[go.Pie(labels=labels, 
+                                            values=values, 
+                                            hole=0.5, 
+                                            marker=dict(colors=['red']))])
+
+                fig1.update_layout(title='Aspirantes antes del Modelo Taly', 
+                annotations=[dict(text='Total', x=0.5, y=0.5, font_size=20, showarrow=False)])
+
+                
+
+                dict_6_meses = {'NO APTOS': 5, 'APTOS': 30}
+
+                labels = list(dict_6_meses.keys())
+                values = list(dict_6_meses.values())
+
+                fig = go.Figure(data=[go.Pie(labels=labels, 
+                                            values=values, 
+                                            hole=0.5, 
+                                            marker=dict(colors=['red']))])
+
+                fig.update_layout(title='Aspirantes despues del Modelo Taly', 
+                annotations=[dict(text='Total', x=0.5, y=0.5, font_size=20, showarrow=False)])
+                
+                col1,col2=st.columns(2)
+                col1.plotly_chart(fig1)
+                col2.plotly_chart(fig) 
+            if col3.button("selecione3"):
                 st.subheader("Contrataciones antes del servicio - Contrataciones actuales con servicio = Beneficio de servicio en contrataciones")
                 # Aquí se puede agregar el código para generar y mostrar el gráfico
                 df_contrataciones = pd.DataFrame({
-                    "Meses": ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio"],
-                    "Antes del servicio": [2, 1, 2, 3, 2, 1],
-                    "Con servicio": [3, 5, 5, 6, 8, 10]
+                    "Meses": ["Enero", "Marzo", "Mayo","Julio", "Septiembre", "Nobiembre"],
+                    "Antes del servicio": [10, 20, 20, 30, 20, 60],
+                    "Con servicio": [10, 20, 40, 50, 90, 120]
                 })
                 fig_contrataciones = px.line(df_contrataciones, x="Meses", y=["Antes del servicio", "Con servicio"], title="Medicion de parametros 6 meses en comparacion antes y despues de Taly ")
-                st.plotly_chart(fig_contrataciones) 
-            if col3.button("selecione3"):
-                periodo = "kpi 3"
+                st.plotly_chart(fig_contrataciones)
             if col4.button("selecione4"):
-                periodo = "kpi 4"
+                df= pd.DataFrame(dict(
+                Perfiles = 'Tiempo',
+                Vacantes_vigentes = [120 ]))
+
+                
+                fig1 = px.bar(df, x='Vacantes_vigentes', y='Perfiles')
+
+                # Establedfcer el rango de medición del eje x
+                fig1.update_xaxes(range=[0, 100])
+
+                fig1.update_layout(
+                    title="TIEMPO PROMEDIO DE CONTRATACION",
+                    xaxis_title="Periodo en dias",
+                    yaxis_title="Tiempo",
+                    font=dict(size=14),
+                    showlegend=False,
+                    width=500,
+                    height=350,
+                    margin=dict(t=170, b=100, l=100, r=10)
+                )
+                df= pd.DataFrame(dict(
+                Perfiles = 'Tiempo',
+                Vacantes_vigentes = [50 ]))
+
+                
+                fig = px.bar(df, x='Vacantes_vigentes', y='Perfiles', color_discrete_sequence=['lightgreen'])
+
+                # Establedfcer el rango de medición del eje x
+                fig.update_xaxes(range=[0, 100])
+
+                fig.update_layout(
+                    title="TIEMPO PROMEDIO DE CONTRATACION ACTUALMENTE",
+                    xaxis_title="Periodo en dias",
+                    yaxis_title="Tiempo",
+                    font=dict(size=14),
+                    showlegend=False,
+                    width=500,
+                    height=350,
+                    margin=dict(t=170, b=100, l=100, r=10)
+                )
+                col1, col2 =st.columns(2)
+                col1.plotly_chart(fig1)
+                col2.plotly_chart(fig)
             if col5.button("selecione5"):
-                periodo = "kpi 5"
+                st.subheader("(Costo total de contratación) / (Número de nuevos empleados contratados) ")
+                # Aquí se puede agregar el código para generar y mostrar el gráfico
+                df_contrataciones = pd.DataFrame({
+                    "Meses": ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio","julio", "Agosto", "Septiembre","Octubre", "Nobiembre", "Diciembre"],
+                    "Antes del servicio": [1000,1200,800, 900,1000,800,900,800,1000,1100,800,700],
+                    "Con servicio": [700, 750, 700, 650, 600, 550,540,530,490,490,490,490]
+                })
+                fig_contrataciones = px.line(df_contrataciones, x="Meses", y=["Antes del servicio", "Con servicio"], title="Comparación de contrataciones")
+                st.plotly_chart(fig_contrataciones)
 
 
 
@@ -1555,27 +1774,110 @@ if seleccion == "Dashboard interno":
                 # Aquí se puede agregar el código para generar y mostrar el gráfico
                 df_contrataciones = pd.DataFrame({
                     "Meses": ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio"],
-                    "Antes del servicio": [50, 75, 100, 125, 150, 175],
-                    "Con servicio": [75, 100, 125, 150, 175, 200]
+                    "Antes del servicio": [22,12,17, 16, 12,15],
+                    "Con servicio": [23, 25, 33, 35, 30, 44]
                 })
                 fig_contrataciones = px.line(df_contrataciones, x="Meses", y=["Antes del servicio", "Con servicio"], title="Comparación de contrataciones")
                 st.plotly_chart(fig_contrataciones) 
             if col2.button("selecione2"):
+                dict_6_meses = {'NO APTOS': 60, 'APTOS': 20}
+
+                labels = list(dict_6_meses.keys())
+                values = list(dict_6_meses.values())
+
+                fig1 = go.Figure(data=[go.Pie(labels=labels, 
+                                            values=values, 
+                                            hole=0.5, 
+                                            marker=dict(colors=['red']))])
+
+                fig1.update_layout(title='Aspirantes antes del Modelo Taly', 
+                annotations=[dict(text='Total', x=0.5, y=0.5, font_size=20, showarrow=False)])
+
+                
+
+                dict_6_meses = {'NO APTOS': 7, 'APTOS': 40}
+
+                labels = list(dict_6_meses.keys())
+                values = list(dict_6_meses.values())
+
+                fig = go.Figure(data=[go.Pie(labels=labels, 
+                                            values=values, 
+                                            hole=0.5, 
+                                            marker=dict(colors=['red']))])
+
+                fig.update_layout(title='Aspirantes despues del Modelo Taly', 
+                annotations=[dict(text='Total', x=0.5, y=0.5, font_size=20, showarrow=False)])
+                
+                col1,col2=st.columns(2)
+                col1.plotly_chart(fig1)
+                col2.plotly_chart(fig) 
+            if col3.button("selecione3"):
                 st.subheader("Contrataciones antes del servicio - Contrataciones actuales con servicio = Beneficio de servicio en contrataciones")
                 # Aquí se puede agregar el código para generar y mostrar el gráfico
                 df_contrataciones = pd.DataFrame({
-                    "Meses": ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio"],
-                    "Antes del servicio": [2, 1, 2, 3, 2, 1],
-                    "Con servicio": [3, 5, 5, 6, 8, 10]
+                    "Meses": ["Enero", "Marzo", "Mayo","Julio", "Septiembre", "Nobiembre"],
+                    "Antes del servicio": [20, 20, 20, 30, 40, 60],
+                    "Con servicio": [30, 50, 55, 70, 90, 120]
                 })
                 fig_contrataciones = px.line(df_contrataciones, x="Meses", y=["Antes del servicio", "Con servicio"], title="Medicion de parametros 6 meses en comparacion antes y despues de Taly ")
-                st.plotly_chart(fig_contrataciones) 
-            if col3.button("selecione3"):
-                periodo = "kpi 3"
+                st.plotly_chart(fig_contrataciones)
             if col4.button("selecione4"):
-                periodo = "kpi 4"
+                df= pd.DataFrame(dict(
+                Perfiles = 'Tiempo',
+                Vacantes_vigentes = [95 ]))
+
+                
+                fig1 = px.bar(df, x='Vacantes_vigentes', y='Perfiles')
+
+                # Establedfcer el rango de medición del eje x
+                fig1.update_xaxes(range=[0, 100])
+
+                fig1.update_layout(
+                    title="TIEMPO PROMEDIO DE CONTRATACION",
+                    xaxis_title="Periodo en dias",
+                    yaxis_title="Tiempo",
+                    font=dict(size=14),
+                    showlegend=False,
+                    width=500,
+                    height=350,
+                    margin=dict(t=170, b=100, l=100, r=10)
+                )
+                df= pd.DataFrame(dict(
+                Perfiles = 'Tiempo',
+                Vacantes_vigentes = [50 ]))
+
+                
+                fig = px.bar(df, x='Vacantes_vigentes', y='Perfiles', color_discrete_sequence=['lightgreen'])
+
+                # Establedfcer el rango de medición del eje x
+                fig.update_xaxes(range=[0, 100])
+
+                fig.update_layout(
+                    title="TIEMPO PROMEDIO DE CONTRATACION ACTUALMENTE",
+                    xaxis_title="Periodo en dias",
+                    yaxis_title="Tiempo",
+                    font=dict(size=14),
+                    showlegend=False,
+                    width=500,
+                    height=350,
+                    margin=dict(t=170, b=100, l=100, r=10)
+                )
+                col1, col2 =st.columns(2)
+                col1.plotly_chart(fig1)
+                col2.plotly_chart(fig)
             if col5.button("selecione5"):
-                periodo = "kpi 5"
+                st.subheader("(Costo total de contratación) / (Número de nuevos empleados contratados) ")
+                # Aquí se puede agregar el código para generar y mostrar el gráfico
+                df_contrataciones = pd.DataFrame({
+                    "Meses": ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio","julio", "Agosto", "Septiembre","Octubre", "Nobiembre", "Diciembre"],
+                    "Antes del servicio": [1000,1200,800, 900,1000,800,900,800,1000,1100,800,700],
+                    "Con servicio": [700, 750, 700, 650, 600, 550,540,530,490,490,490,490]
+                })
+                fig_contrataciones = px.line(df_contrataciones, x="Meses", y=["Antes del servicio", "Con servicio"], title="Comparación de contrataciones")
+                st.plotly_chart(fig_contrataciones)
+
+
+
 
     elif empresa_seleccionada == "CyberDefenders":
         col1, col2, col3,col4,col5 = st.columns(5)
@@ -1610,27 +1912,110 @@ if seleccion == "Dashboard interno":
                 # Aquí se puede agregar el código para generar y mostrar el gráfico
                 df_contrataciones = pd.DataFrame({
                     "Meses": ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio"],
-                    "Antes del servicio": [50, 75, 100, 125, 150, 175],
-                    "Con servicio": [75, 100, 125, 150, 175, 200]
+                    "Antes del servicio": [50, 50, 44, 33, 40, 35],
+                    "Con servicio": [33, 44, 52, 66, 63, 68]
                 })
                 fig_contrataciones = px.line(df_contrataciones, x="Meses", y=["Antes del servicio", "Con servicio"], title="Comparación de contrataciones")
                 st.plotly_chart(fig_contrataciones) 
             if col2.button("selecione2"):
+                dict_6_meses = {'NO APTOS': 100, 'APTOS': 300}
+
+                labels = list(dict_6_meses.keys())
+                values = list(dict_6_meses.values())
+
+                fig1 = go.Figure(data=[go.Pie(labels=labels, 
+                                            values=values, 
+                                            hole=0.5, 
+                                            marker=dict(colors=['red']))])
+
+                fig1.update_layout(title='Aspirantes antes del Modelo Taly', 
+                annotations=[dict(text='Total', x=0.5, y=0.5, font_size=20, showarrow=False)])
+
+                
+
+                dict_6_meses = {'NO APTOS': 7, 'APTOS': 60}
+
+                labels = list(dict_6_meses.keys())
+                values = list(dict_6_meses.values())
+
+                fig = go.Figure(data=[go.Pie(labels=labels, 
+                                            values=values, 
+                                            hole=0.5, 
+                                            marker=dict(colors=['red']))])
+
+                fig.update_layout(title='Aspirantes despues del Modelo Taly', 
+                annotations=[dict(text='Total', x=0.5, y=0.5, font_size=20, showarrow=False)])
+                
+                col1,col2=st.columns(2)
+                col1.plotly_chart(fig1)
+                col2.plotly_chart(fig)
+            if col3.button("selecione3"):
                 st.subheader("Contrataciones antes del servicio - Contrataciones actuales con servicio = Beneficio de servicio en contrataciones")
                 # Aquí se puede agregar el código para generar y mostrar el gráfico
                 df_contrataciones = pd.DataFrame({
-                    "Meses": ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio"],
-                    "Antes del servicio": [2, 1, 2, 3, 2, 1],
-                    "Con servicio": [3, 5, 5, 6, 8, 10]
+                    "Meses": ["Enero", "Marzo", "Mayo","Julio", "Septiembre", "Nobiembre"],
+                    "Antes del servicio": [20, 20, 40, 60, 60, 65],
+                    "Con servicio": [30, 50, 50, 60, 80, 100]
                 })
                 fig_contrataciones = px.line(df_contrataciones, x="Meses", y=["Antes del servicio", "Con servicio"], title="Medicion de parametros 6 meses en comparacion antes y despues de Taly ")
-                st.plotly_chart(fig_contrataciones) 
-            if col3.button("selecione3"):
-                periodo = "kpi 3"
+                st.plotly_chart(fig_contrataciones)
             if col4.button("selecione4"):
-                periodo = "kpi 4"
+                df= pd.DataFrame(dict(
+                Perfiles = 'Tiempo',
+                Vacantes_vigentes = [100 ]))
+
+                
+                fig1 = px.bar(df, x='Vacantes_vigentes', y='Perfiles')
+
+                # Establedfcer el rango de medición del eje x
+                fig1.update_xaxes(range=[0, 100])
+
+                fig1.update_layout(
+                    title="TIEMPO PROMEDIO DE CONTRATACION",
+                    xaxis_title="Periodo en dias",
+                    yaxis_title="Tiempo",
+                    font=dict(size=14),
+                    showlegend=False,
+                    width=500,
+                    height=350,
+                    margin=dict(t=170, b=100, l=100, r=10)
+                )
+                df= pd.DataFrame(dict(
+                Perfiles = 'Tiempo',
+                Vacantes_vigentes = [45 ]))
+
+                
+                fig = px.bar(df, x='Vacantes_vigentes', y='Perfiles', color_discrete_sequence=['lightgreen'])
+
+                # Establedfcer el rango de medición del eje x
+                fig.update_xaxes(range=[0, 100])
+
+                fig.update_layout(
+                    title="TIEMPO PROMEDIO DE CONTRATACION ACTUALMENTE",
+                    xaxis_title="Periodo en dias",
+                    yaxis_title="Tiempo",
+                    font=dict(size=14),
+                    showlegend=False,
+                    width=500,
+                    height=350,
+                    margin=dict(t=170, b=100, l=100, r=10)
+                )
+                col1, col2 =st.columns(2)
+                col1.plotly_chart(fig1)
+                col2.plotly_chart(fig)
             if col5.button("selecione5"):
-                periodo = "kpi 5"
+                st.subheader("(Costo total de contratación) / (Número de nuevos empleados contratados) ")
+                # Aquí se puede agregar el código para generar y mostrar el gráfico
+                df_contrataciones = pd.DataFrame({
+                    "Meses": ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio","julio", "Agosto", "Septiembre","Octubre", "Nobiembre", "Diciembre"],
+                    "Antes del servicio": [1000,1200,800, 900,1000,800,900,800,1000,1100,800,700],
+                    "Con servicio": [700, 750, 700, 650, 600, 550,540,530,490,490,490,490]
+                })
+                fig_contrataciones = px.line(df_contrataciones, x="Meses", y=["Antes del servicio", "Con servicio"], title="Comparación de contrataciones")
+                st.plotly_chart(fig_contrataciones)
+
+
+
     elif empresa_seleccionada == "TechSolutions":
         col1, col2, col3,col4,col5 = st.columns(5)
 
@@ -1664,26 +2049,140 @@ if seleccion == "Dashboard interno":
                 # Aquí se puede agregar el código para generar y mostrar el gráfico
                 df_contrataciones = pd.DataFrame({
                     "Meses": ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio"],
-                    "Antes del servicio": [2, 1, 2, 3, 2, 1],
+                    "Antes del servicio": [2, 1, 2, 3, 2, 2],
                     "Con servicio": [3, 5, 5, 6, 8, 10]
                 })
                 fig_contrataciones = px.line(df_contrataciones, x="Meses", y=["Antes del servicio", "Con servicio"], title="Medicion de parametros 6 meses en comparacion antes y despues de Taly ")
                 st.plotly_chart(fig_contrataciones) 
             if col2.button("selecione2"):
+                dict_6_meses = {'NO APTOS': 80, 'APTOS': 20}
+
+                labels = list(dict_6_meses.keys())
+                values = list(dict_6_meses.values())
+
+                fig1 = go.Figure(data=[go.Pie(labels=labels, 
+                                            values=values, 
+                                            hole=0.5, 
+                                            marker=dict(colors=['red']))])
+
+                fig1.update_layout(title='Aspirantes antes del Modelo Taly', 
+                annotations=[dict(text='Total', x=0.5, y=0.5, font_size=20, showarrow=False)])
+
+                
+
+                dict_6_meses = {'NO APTOS': 5, 'APTOS': 35}
+
+                labels = list(dict_6_meses.keys())
+                values = list(dict_6_meses.values())
+
+                fig = go.Figure(data=[go.Pie(labels=labels, 
+                                            values=values, 
+                                            hole=0.5, 
+                                            marker=dict(colors=['red']))])
+
+                fig.update_layout(title='Aspirantes despues del Modelo Taly', 
+                annotations=[dict(text='Total', x=0.5, y=0.5, font_size=20, showarrow=False)])
+                
+                col1,col2=st.columns(2)
+                col1.plotly_chart(fig1)
+                col2.plotly_chart(fig)
+            if col3.button("selecione3"):
                 st.subheader("Contrataciones antes del servicio - Contrataciones actuales con servicio = Beneficio de servicio en contrataciones")
                 # Aquí se puede agregar el código para generar y mostrar el gráfico
                 df_contrataciones = pd.DataFrame({
-                    "Meses": ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio"],
-                    "Antes del servicio": [2, 1, 2,0,0,0 ],
-                    "Con servicio": [3, 5, 5, 6, 8, 10]
+                    "Meses": ["Enero", "Marzo", "Mayo","Julio", "Septiembre", "Nobiembre"],
+                    "Antes del servicio": [20, 40, 60, 60, 66, 70],
+                    "Con servicio": [30, 50, 50, 60, 80, 100]
                 })
-                # Creamos el gráfico de caja con los datos de contrataciones
-                fig = px.bar(df_contrataciones, y="Meses", x=["Antes del servicio", "Con servicio"],  title="Medicion de parametros 6 meses en comparacion antes y despues de Taly ")
-                st.plotly_chart(fig) 
 
-            if col3.button("selecione3"):
-                periodo = "kpi 3"
+                fig_contrataciones = px.line(df_contrataciones, x="Meses", y=["Antes del servicio", "Con servicio"], title="Medicion de parametros 6 meses en comparacion antes y despues de Taly ")
+                st.plotly_chart(fig_contrataciones)
             if col4.button("selecione4"):
-                periodo = "kpi 4"
+                df= pd.DataFrame(dict(
+                Perfiles = 'Tiempo',
+                Vacantes_vigentes = [85 ]))
+
+                
+                fig1 = px.bar(df, x='Vacantes_vigentes', y='Perfiles')
+
+                # Establedfcer el rango de medición del eje x
+                fig1.update_xaxes(range=[0, 100])
+
+                fig1.update_layout(
+                    title="TIEMPO PROMEDIO DE CONTRATACION",
+                    xaxis_title="Periodo en dias",
+                    yaxis_title="Tiempo",
+                    font=dict(size=14),
+                    showlegend=False,
+                    width=500,
+                    height=350,
+                    margin=dict(t=170, b=100, l=100, r=10)
+                )
+                df= pd.DataFrame(dict(
+                Perfiles = 'Tiempo',
+                Vacantes_vigentes = [30 ]))
+
+                
+                fig = px.bar(df, x='Vacantes_vigentes', y='Perfiles', color_discrete_sequence=['lightgreen'])
+
+                # Establedfcer el rango de medición del eje x
+                fig.update_xaxes(range=[0, 100])
+
+                fig.update_layout(
+                    title="TIEMPO PROMEDIO DE CONTRATACION ACTUALMENTE",
+                    xaxis_title="Periodo en dias",
+                    yaxis_title="Tiempo",
+                    font=dict(size=14),
+                    showlegend=False,
+                    width=500,
+                    height=350,
+                    margin=dict(t=170, b=100, l=100, r=10)
+                )
+                col1, col2 =st.columns(2)
+                col1.plotly_chart(fig1)
+                col2.plotly_chart(fig)
             if col5.button("selecione5"):
-                periodo = "kpi 5"
+                st.subheader("(Costo total de contratación) / (Número de nuevos empleados contratados) ")
+                # Aquí se puede agregar el código para generar y mostrar el gráfico
+                df_contrataciones = pd.DataFrame({
+                    "Meses": ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio","julio", "Agosto", "Septiembre","Octubre", "Nobiembre", "Diciembre"],
+                    "Antes del servicio": [1000,1200,800, 900,1000,800,900,800,1000,1100,800,700],
+                    "Con servicio": [700, 750, 700, 650, 600, 550,540,530,490,490,490,490]
+                })
+                fig_contrataciones = px.line(df_contrataciones, x="Meses", y=["Antes del servicio", "Con servicio"], title="Comparación de contrataciones")
+                st.plotly_chart(fig_contrataciones)
+    
+
+       
+
+    
+if seleccion == "Back End":
+    st.title('EL DETRAS DE ESCENA.')
+    st.header('Te contamos como inicio Taly')
+    st.markdown('#### El rubro de los datos se ha convertido en un sector cada vez más importante en el mercado laboral. Con la explosión del big data y la inteligencia artificial, las oportunidades laborales en este campo se han multiplicado en los últimos años. Una de las tendencias más importantes es la demanda de profesionales altamente capacitados en áreas como la ciencia de datos, la minería de datos y la analítica de datos. Las corporaciones buscan personas con habilidades técnicas en programación, estadísticas y matemáticas, así como con habilidades interpersonales para comunicar los resultados de sus análisis a las partes interesadas. Sin embargo, hay un gran déficit de profesionales de este sector, lo cual es un gran problema…') 
+    st.markdown('#### Para esto, vamos a analizar la tendencia de las ofertas laborales en el sector de datos y calcular el porcentaje de incremento que se ha dado en los últimos años. Cada empresa establece los requisitos para cada puesto y a veces solicitan apoyo de profesionales externos para llevar a cabos los procesos de reclutamiento y selección. ')
+    st.markdown('#### Es en esa situación que, como consultora de recursos humanos, podemos ofrecer nuestros servicios para estandarizar las ofertas de empleo para poder encontrar el personal adecuado del área de los datos. ')
+    st.markdown('### ¿Qué hicimos? ')
+    st.markdown('#### Buscamos vacantes laborales del área de datos en Linkedin, la fuente de empleos más importante en el rubro IT. Realizamos scraping para obtener las publicaciones sobre los puestos de data analytics, data engineer y data science. ')
+    st.markdown('#### También descargamos un csv de Sysarmy, el cual reflejaba las remuneraciones de diversos puestos IT.')
+    st.markdown('#### Realizamos ETL para transformar los títulos de las columnas y extraer de éstas, la información para hacer nuevas columnas. Decidimos no imputar las filas vacías ya que pertenecían a columnas que no aportaban información para nuestro posterior análisis. Borramos los datos duplicados para no sesgar los resultados. ')
+    st.markdown('#### Luego realizamos el EDA, donde pudimos concluir que las variables importantes para nuestro análisis serían “localidad” y “modalidad”. ')
+    st.markdown('#### Utilizamos Pandas, Numpy y Seaborn para el ETL y EDA. Luego Google cloud para el almacenamiento y Prefect para la automatización y el sistema de recomendación. Finalmente, hicimos el deploy en Streamlit, para mostrar la página web de nuestra empresa. ')
+
+
+    st.header('HERRAMIENTAS UTILIZADAS')
+    st.image('./bacck.png', caption='Caption of your image', use_column_width=True)
+    st.title('GSP')
+    st.subheader('GSP es una solución de búsqueda empresarial de Google que proporciona herramientas para mejorar la calidad de la búsqueda en sitios web, aplicaciones y otros tipos de contenido')
+    st.image('./imagencloud.jpeg', caption='Caption of your image', use_column_width=True)
+
+    st.title('PREFECT')
+    st.subheader('Prefect es una plataforma de flujo de trabajo de datos de código abierto que se utiliza para automatizar tareas y procesos en el mundo de la ciencia de datos y el aprendizaje automático. Prefect proporciona una API intuitiva para definir y ejecutar flujos de trabajo, y también ofrece integraciones con servicios en la nube como AWS, GCP y Azure. Con Prefect, los usuarios pueden crear flujos de trabajo complejos que orquestren tareas en sistemas distribuidos con alta escalabilidad y fiabilidad.')
+    st.title('PYTHON')
+    st.subheader('Python es un lenguaje de programación de alto nivel, interpretado y orientado a objetos. Es fácil de leer y escribir gracias a su sintaxis simple y clara. Se utiliza para una amplia gama de aplicaciones, como desarrollo web, análisis de datos, inteligencia artificial y automatización de tareas. Además, es una de las opciones más populares para la enseñanza de programación debido a su facilidad de uso y amplia comunidad de apoyo.')
+    st.title('STREAMLIT')
+    st.subheader('Streamlit es una biblioteca de Python de código abierto que permite a los usuarios crear aplicaciones web interactivas y personalizadas para visualizar y compartir datos y modelos de aprendizaje automático. Con Streamlit, los desarrolladores pueden crear aplicaciones en pocos minutos utilizando herramientas familiares de Python y una sintaxis simple. Streamlit proporciona una forma rápida y fácil de prototipar y compartir aplicaciones interactivas en la web.')
+
+
+    st.title('PROCESO Y MANOS EN OBRA')
+    st.subheader('Se comenzó obteniendo datos de diversas fuentes, incluyendo una práctica llamada web scraping para obtener datos de ofertas laborales de LinkedIn, siendo esta una de las fuentes principales. Luego, se almacenaron todos los datos en la nube de GCS. Posteriormente, se creó un flujo de trabajo con Prefect para que el proceso de ETL se realizara de manera automatizada, leyendo los datos directamente desde la nube sin necesidad de descargarlos en nuestros equipos locales. De esta forma, se automatizó el proceso de limpieza y transformación de los archivos según nuestras necesidades para su posterior consumo en nuestros análisis y sistemas de recomendación. Esto nos permitió tener un mejor entendimiento de los datos y un consumo más eficiente de nuestras fuentes..')
