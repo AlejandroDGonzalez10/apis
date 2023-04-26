@@ -9,7 +9,7 @@ from streamlit_folium import folium_static
 import re
 
 #------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-menu=('Incio', 'Dashboard', 'TalyIA','Dashboard interno','Contactos', 'Back End')
+menu=('Incio', 'Dashboard', 'TalyIA','Dashboard interno','Back End','Contactanos', )
 seleccion=st.sidebar.selectbox('TALENTIA Menu', menu )
 
 
@@ -1166,6 +1166,12 @@ elif seleccion == "Dashboard":
 elif seleccion == "TalyIA":
     def normalize_input(input_string):
         return re.sub(r'[^\w\s]','',input_string.lower())
+    st.image('./IA.jpeg', caption='Caption of your image', use_column_width=True)
+
+    st.markdown("<div style='text-align: center;'><h1 style='color: #FF8C00;'>TALY</h1></div>", unsafe_allow_html=True)        
+
+    st.header('Tu herramienta ideal')
+    st.markdown('#### sistema de recomendacion para perfiles del sector data')
 
     # Crea secciones para cada tipo de entrada de datos
     with st.form(key='my_form'):
@@ -1870,9 +1876,9 @@ if seleccion == "Dashboard interno":
                 # Aquí se puede agregar el código para generar y mostrar el gráfico
                 df_contrataciones = pd.DataFrame({
                     "Meses": ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio","julio", "Agosto", "Septiembre","Octubre", "Nobiembre", "Diciembre"],
-                    "Antes del servicio": [1000,1200,800, 900,1000,800,900,800,1000,1100,800,700],
-                    "Con servicio": [700, 750, 700, 650, 600, 550,540,530,490,490,490,490]
-                })
+                    "Antes del servicio": [800, 960, 640, 720, 800, 640, 720, 640, 800, 880, 640, 560],
+                    "Con servicio": [560, 600, 560, 520, 480, 440, 432, 424, 392, 392, 392, 392]
+                    })
                 fig_contrataciones = px.line(df_contrataciones, x="Meses", y=["Antes del servicio", "Con servicio"], title="Comparación de contrataciones")
                 st.plotly_chart(fig_contrataciones)
 
@@ -2146,8 +2152,10 @@ if seleccion == "Dashboard interno":
                 # Aquí se puede agregar el código para generar y mostrar el gráfico
                 df_contrataciones = pd.DataFrame({
                     "Meses": ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio","julio", "Agosto", "Septiembre","Octubre", "Nobiembre", "Diciembre"],
-                    "Antes del servicio": [1000,1200,800, 900,1000,800,900,800,1000,1100,800,700],
-                    "Con servicio": [700, 750, 700, 650, 600, 550,540,530,490,490,490,490]
+                    "Antes del servicio": [900, 1080, 720, 810, 900, 720, 810, 720, 900, 990, 720, 630],
+                    "Con servicio": [700, 750, 700, 650, 600, 550, 540, 530, 490, 490, 490, 490]
+            
+
                 })
                 fig_contrataciones = px.line(df_contrataciones, x="Meses", y=["Antes del servicio", "Con servicio"], title="Comparación de contrataciones")
                 st.plotly_chart(fig_contrataciones)
@@ -2185,4 +2193,9 @@ if seleccion == "Back End":
 
 
     st.title('PROCESO Y MANOS EN OBRA')
+    st.image('./flujo.jpeg', caption='Caption of your image', use_column_width=True)
     st.subheader('Se comenzó obteniendo datos de diversas fuentes, incluyendo una práctica llamada web scraping para obtener datos de ofertas laborales de LinkedIn, siendo esta una de las fuentes principales. Luego, se almacenaron todos los datos en la nube de GCS. Posteriormente, se creó un flujo de trabajo con Prefect para que el proceso de ETL se realizara de manera automatizada, leyendo los datos directamente desde la nube sin necesidad de descargarlos en nuestros equipos locales. De esta forma, se automatizó el proceso de limpieza y transformación de los archivos según nuestras necesidades para su posterior consumo en nuestros análisis y sistemas de recomendación. Esto nos permitió tener un mejor entendimiento de los datos y un consumo más eficiente de nuestras fuentes..')
+
+elif seleccion == "Contactanos":
+    st.subheader('tusociotaly@talentia.com')
+    st.subheader('Tel:01145654585')
