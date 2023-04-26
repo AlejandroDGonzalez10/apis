@@ -9,7 +9,7 @@ from streamlit_folium import folium_static
 import re
 
 #------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-menu=('Incio', 'Dashboard', 'TalyIA','Contactos')
+menu=('Incio', 'Dashboard', 'TalyIA','Dashboard interno','Contactos', 'Back End')
 seleccion=st.sidebar.selectbox('TALENTIA Menu', menu )
 
 
@@ -42,10 +42,10 @@ if seleccion == "Incio":
     st.write('')
     st.write('')
     st.write('')
-    st.markdown('##### En un mercado laboral cada vez más competitivo, es esencial contar con el equipo adecuado que pueda llevar a su empresa o reclutadora al éxito. En nuestra consultora de recursos humanos, nos apasiona la innovación y la excelencia en todo lo que hacemos. Con más de XX años de experiencia en la industria, nuestro equipo de expertos en recursos humanos ha ayudado a innumerables clientes a superar los desafíos de contratación más difíciles, desde la disminución en las contrataciones deseadas hasta los altos costos de contratación.')
-    st.markdown('##### Nos enorgullece brindar soluciones únicas y personalizadas que superan las expectativas de nuestros clientes. Somos innovadores y estamos a la vanguardia de las últimas tendencias y tecnologías de la industria, lo que nos permite ofrecer un servicio de alta calidad y personalizado para cada cliente.')
-    st.markdown('##### Además, nos comprometemos a brindar soluciones efectivas y únicas. Contamos con una amplia red de contactos y un sistema avanzado de recomendación que nos permite encontrar a los candidatos adecuados para cada puesto y ayudar a nuestros clientes a tomar decisiones de contratación informadas y acertadas.')
-    st.markdown('##### Confíe en nosotros para brindarle soluciones de recursos humanos únicas y efectivas que lo ayuden a superar los desafíos de contratación más difíciles y a encontrar al candidato perfecto para cada puesto. En nuestra consultora, nos apasiona la excelencia y estamos dedicados a ayudar a nuestros clientes a alcanzar el éxito en un mercado laboral cada vez más competitivo.')
+    st.markdown('##### - En un mercado laboral cada vez más competitivo, es esencial contar con el equipo adecuado que pueda llevar a su empresa o reclutadora al éxito. En nuestra consultora de recursos humanos, nos apasiona la innovación y la excelencia en todo lo que hacemos. Con más de XX años de experiencia en la industria, nuestro equipo de expertos en recursos humanos ha ayudado a innumerables clientes a superar los desafíos de contratación más difíciles, desde la disminución en las contrataciones deseadas hasta los altos costos de contratación.')
+    st.markdown('##### - Nos enorgullece brindar soluciones únicas y personalizadas que superan las expectativas de nuestros clientes. Somos innovadores y estamos a la vanguardia de las últimas tendencias y tecnologías de la industria, lo que nos permite ofrecer un servicio de alta calidad y personalizado para cada cliente.')
+    st.markdown('##### - Además, nos comprometemos a brindar soluciones efectivas y únicas. Contamos con una amplia red de contactos y un sistema avanzado de recomendación que nos permite encontrar a los candidatos adecuados para cada puesto y ayudar a nuestros clientes a tomar decisiones de contratación informadas y acertadas.')
+    st.markdown('##### - Confíe en nosotros para brindarle soluciones de recursos humanos únicas y efectivas que lo ayuden a superar los desafíos de contratación más difíciles y a encontrar al candidato perfecto para cada puesto. En nuestra consultora, nos apasiona la excelencia y estamos dedicados a ayudar a nuestros clientes a alcanzar el éxito en un mercado laboral cada vez más competitivo.')
     
     st.write('')
     st.write('')
@@ -1111,8 +1111,9 @@ elif seleccion == "Dashboard":
     
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-else:
+
         # Función para normalizar la entrada de texto
+elif seleccion == "TalyIA":
     def normalize_input(input_string):
         return re.sub(r'[^\w\s]','',input_string.lower())
 
@@ -1147,7 +1148,7 @@ else:
         st.header("Salario mínimo")
         salario = st.slider("Elige el salario mínimo que te gustaría recibir:", min_value=1000, max_value=15000, step=500)
 
-      
+    
         # Añadimos un botón para ejecutar el código cuando el usuario termine de responder las preguntas
         submit_button = st.form_submit_button(label='Buscar candidato')
         perfiles = {
@@ -1156,7 +1157,7 @@ else:
         "lenguajes": ["Python", "SQL"],
         "habilidades": ["ETL", "Big Data"],
         "orientacion profesional": ["Tecnología", "Ciencias", "Finanzas", "Marketing", "Salud"],
-         "idiomas recomendados": ["Inglés", "Español"],
+        "idiomas recomendados": ["Inglés", "Español"],
         "herramientas": ["Jupyter Notebook", "Git", "Google Cloud"],
         "salario mínimo": [2500, 3000]
     },
@@ -1169,7 +1170,7 @@ else:
         "herramientas": ["Jupyter Notebook", "Tableau", "PowerBI", ],
         "salario mínimo": [2500, 3000]
     },
-       "Data Scientist trainee": {
+    "Data Scientist trainee": {
         "rango de años de experiencia": range(0,1),
         "lenguajes": ["Python", "R"],
         "habilidades": ["Análisis de datos", "Estadística"],
@@ -1183,7 +1184,7 @@ else:
         "lenguajes": ["Python", "SQL"],
         "habilidades": ["ETL", "Big Data", "webscripting"],
         "orientacion profesional": ["Tecnología", "Ciencias", "Finanzas", "Marketing", "Salud"],
-         "idiomas recomendados": ["Inglés", "Español"],
+        "idiomas recomendados": ["Inglés", "Español"],
         "herramientas": ["Jupyter Notebook", "Hadoop","Git","Spark","MongoDB "],
         "salario mínimo": [3500, 4000]
     },
@@ -1192,7 +1193,7 @@ else:
         "lenguajes": ["Python", "SQL", "Java"],
         "habilidades": ["ETL", "Big Data", "Cloud Computing"],
         "orientacion profesional": ["Tecnología", "Ciencias", "Finanzas", "Marketing", "Salud"],
-         "idiomas recomendados": ["Inglés", "Español"],
+        "idiomas recomendados": ["Inglés", "Español"],
         "herramientas": ["Jupyter Notebook","Apache Airflow","MongoDB","Spark","Git","Hadoop","Google Cloud",],
         "salario mínimo": [5000, 5500]
     },
@@ -1201,7 +1202,7 @@ else:
         "lenguajes": ["Python", "SQL", "Java"],
         "habilidades": ["ETL", "Big Data", "Cloud Computing", "Arquitectura"],
         "orientacion profesional": ["Tecnología", "Ciencias", "Finanzas", "Marketing", "Salud"],
-         "idiomas recomendados": ["Inglés", "Español"],
+        "idiomas recomendados": ["Inglés", "Español"],
         "herramientas": ["Jupyter Notebook", "Grafana","Apache Airflow","Apache NiFi ","MongoDB","Spark","Git","Hadoop","Google Cloud",],
         "salario mínimo": [8000, 10000]
     },
@@ -1212,7 +1213,7 @@ else:
         "lenguajes": ["Python", "R", "SQL"],
         "habilidades": ["Análisis estadístico", "Visualización de datos", "Data wrangling"],
         "orientacion profesional": ["Tecnología", "Ciencias", "Finanzas", "Marketing", "Salud"],
-         "idiomas recomendados": ["Inglés", "Español"],
+        "idiomas recomendados": ["Inglés", "Español"],
         "herramientas": ["Jupyter Notebook", "Tableau", "PowerBI", "Looker Studio","Google Analytics"],
         "salario mínimo": [3500, 4000]
     },
@@ -1230,7 +1231,7 @@ else:
         "lenguajes": ["Python", "R", "SQL"],
         "habilidades": ["Análisis estadístico", "Visualización de datos", "Data wrangling", "Modelos predictivos", "Machine learning"],
         "orientacion profesional": ["Tecnología", "Ciencias", "Finanzas", "Marketing", "Salud"],
-         "idiomas recomendados": ["Inglés", "Español"],
+        "idiomas recomendados": ["Inglés", "Español"],
         "herramientas": ["Jupyter Notebook", "Tableau", "PowerBI", "Looker Studio","Google Analytics","QlikView","spaCy","NLTK"],
         "salario mínimo": [8000, 10000]
     },
@@ -1239,7 +1240,7 @@ else:
         "lenguajes": ["Python", "R","SQL"],
         "habilidades": ["Análisis de datos", "Estadística"],
         "orientacion profesional": ["Tecnología", "Ciencias", "Finanzas", "Marketing", "Salud"],
-         "idiomas recomendados": ["Inglés", "Español"],
+        "idiomas recomendados": ["Inglés", "Español"],
         "herramientas": ["Jupyter Notebook", "Tableau", "PowerBI","GitHub"],
         "salario mínimo": [2500, 3000]
     },
@@ -1258,7 +1259,7 @@ else:
         "lenguajes": ["Python", "R", "SQL"],
         "habilidades": ["Análisis de datos", "Estadística", "Machine Learning", "Visualización de datos"],
         "orientacion profesional": ["Tecnología", "Ciencias", "Finanzas", "Marketing", "Salud"],
-         "idiomas recomendados": ["Inglés", "Español"],
+        "idiomas recomendados": ["Inglés", "Español"],
         "herramientas": ["Jupyter Notebook", "Tableau", "PowerBI", "MongoDB","Bitbucket","GitHub","AWS","Azure"],
         "salario mínimo": [5000, 5500]
     },
@@ -1334,5 +1335,355 @@ else:
         st.subheader(f"Salario mínimo: {', '.join(map(str, perfil_recomendado['salario mínimo'])).replace('[','').replace(']','')}")
 
 
-menuu=('Proyecto', 'back end')
-seleccion=st.sidebar.selectbox('Nosotros', menuu )
+# menuu=('Proyecto', 'back end')
+# seleccion=st.sidebar.selectbox('Nosotros', menuu )
+
+
+if seleccion == "Dashboard interno":
+  #Definimos la estructura del dashboard
+    st.title("SEGUIMIENTO DE SOCIOS")
+    st.write('')
+    st.write('')
+    st.write('')
+    st.write('')
+
+    col1,col2 = st.columns(2)
+
+    # Agregamos un título a la columna
+    with col1:
+        st.header("Seleccione un Socio")
+        empresas = ["DataTech", "CodeWorks", "CyberDefenders", "TechSolutions", "CloudMinds"]
+        empresa_seleccionada = st.radio("Selecciona una empresa cliente", empresas)
+
+    # Crea una columna en el layout principal
+    with col2:
+        st.header(f"Información de la **{empresa_seleccionada}**")
+        st.write('')
+        # Muestra la información de la empresa seleccionada en la columna 2
+        if empresa_seleccionada == "DataTech":
+            st.markdown("##### Ingreso desde: 20-06-2022")
+            st.markdown("##### Ubicación: Silicon Valley, California, EE. UU.")
+            st.markdown("##### Industria: soluciones de inteligencia artificial")
+            st.markdown("##### Número de empleados: 500")
+            
+        elif empresa_seleccionada == "CloudMinds":
+            st.markdown("##### Ingreso desde: 01-11-2022")
+            st.markdown("##### Ubicación: Ciudad de México, México.")
+            st.markdown("##### Industria: servicios de nube y almacenamiento en la nube.")
+            st.markdown("##### Número de empleados: 250")
+        elif empresa_seleccionada == "CodeWorks":
+            st.markdown("##### Ingreso desde: 17-09-2022")
+            st.markdown("##### Ubicación:  NeoTokio, Japón.")
+            st.markdown("##### Industria: desarrollo de software")
+            st.markdown("##### Número de empleados: 300")
+        elif empresa_seleccionada == "CyberDefenders":
+            st.markdown("##### Ingreso desde: 02-11-2022")
+            st.markdown("##### Ubicación: São Paulo, Brasil.")
+            st.markdown("##### Industria: ciberseguridad")
+            st.markdown("##### Número de empleados: 150")
+        elif empresa_seleccionada == "TechSolutions":
+            st.markdown("##### Ingreso desde: 21-01-2023")
+            st.markdown("##### Ubicación: Berlín, Alemania.")
+            st.markdown("##### Industria:  desarrollo de software y soluciones tecnológicas.")
+            st.markdown("##### Número de empleados: 300")
+
+  # Definimos los KPIs
+    ventas_totales = 2000000
+    clientes_totales = 500
+    promedio_compra = 4000
+    tasa_retencion = 0.8
+    conversion_visitas = 0.05
+
+    # Creamos los gráficos
+    datos_antes = pd.DataFrame({
+        "Meses": ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio"],
+        "Ventas": [100000, 150000, 200000, 250000, 300000, 350000]
+    })
+    fig_antes = px.line(datos_antes, x="Meses", y="Ventas", title="Ventas antes de nuestros servicios")
+
+    datos_despues = pd.DataFrame({
+        "Meses": ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio"],
+        "Ventas": [150000, 200000, 250000, 300000, 350000, 400000]
+    })
+    fig_despues = px.line(datos_despues, x="Meses", y="Ventas", title="Ventas después de nuestros servicios")
+
+
+    if empresa_seleccionada == "DataTech":
+
+        col1, col2, col3,col4,col5 = st.columns(5)
+
+        with col1: 
+            st.markdown("<p style='font-size: 18px; font-weight: bold;'><h5>AUMENTO DE LAS CONTRATACIONES</h5></p>", unsafe_allow_html=True)
+            st.empty()
+            st.metric("", str('KPI') + " 1", delta=" -50 %", delta_color="normal")
+        with col2: 
+            st.markdown("<p style='font-size: 18px; font-weight: bold;'><h5>ATRACTIVO EN LAS VACANTES</h5></p>", unsafe_allow_html=True)
+            st.empty()
+            st.metric("", str('KPI') + " 2", delta=" -50 %", delta_color="normal")
+        with col3:
+            st.markdown("<p style='font-size: 18px; font-weight: bold;'><h5>PERMANENCIA EN LA EMPRESA</h5></p>", unsafe_allow_html=True)
+            st.empty()
+            st.metric("", str('KPI') + " 3", delta=" -50 %", delta_color="normal")
+        with col4: 
+            st.markdown("<p style='font-size: 18px; font-weight: bold;'><h5>TIEMPO DE CONTRATACION</h5></p>", unsafe_allow_html=True)
+            st.empty()
+            st.metric("", str('KPI') + " 4", delta=" -50 %", delta_color="normal")
+        with col5:     
+            st.markdown("<p style='font-size: 18px; font-weight: bold;'><h5>COSTOS EN CONTRATACIONES</h5></p>", unsafe_allow_html=True)
+            st.empty()
+            st.metric("", str('KPI') + " 5", delta=" -50 %", delta_color="normal")
+
+        
+        with st.container():
+            col1, col2, col3,col4,col5 = st.columns(5)
+            periodo = ""
+            if col1.button("selecione1"):
+                st.subheader("Contrataciones antes del servicio - Contrataciones actuales con servicio = Beneficio de servicio en contrataciones")
+                # Aquí se puede agregar el código para generar y mostrar el gráfico
+                df_contrataciones = pd.DataFrame({
+                    "Meses": ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio"],
+                    "Antes del servicio": [50, 75, 100, 125, 150, 175],
+                    "Con servicio": [75, 100, 125, 150, 175, 200]
+                })
+                fig_contrataciones = px.line(df_contrataciones, x="Meses", y=["Antes del servicio", "Con servicio"], title="Comparación de contrataciones")
+                st.plotly_chart(fig_contrataciones)         
+            if col2.button("selecione2"):
+                st.subheader("Contrataciones antes del servicio - Contrataciones actuales con servicio = Beneficio de servicio en contrataciones")
+                # Aquí se puede agregar el código para generar y mostrar el gráfico
+                df_contrataciones = pd.DataFrame({
+                    "Meses": ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio"],
+                    "Antes del servicio": [2, 1, 2, 3, 2, 1],
+                    "Con servicio": [3, 5, 5, 6, 8, 10]
+                })
+                fig_contrataciones = px.line(df_contrataciones, x="Meses", y=["Antes del servicio", "Con servicio"], title="Medicion de parametros 6 meses en comparacion antes y despues de Taly ")
+                st.plotly_chart(fig_contrataciones) 
+            if col3.button("selecione3"):
+                periodo = "kpi 3"
+            if col4.button("selecione4"):
+                periodo = "kpi 4"
+            if col5.button("selecione5"):
+                periodo = "kpi 5"
+
+    elif empresa_seleccionada == "CloudMinds":
+        col1, col2, col3,col4,col5 = st.columns(5)
+
+        with col1: 
+            st.markdown("<p style='font-size: 18px; font-weight: bold;'><h5>AUMENTO DE LAS CONTRATACIONES</h5></p>", unsafe_allow_html=True)
+            st.empty()
+            st.metric("", str('KPI') + " 1", delta=" -50 %", delta_color="normal")
+        with col2: 
+            st.markdown("<p style='font-size: 18px; font-weight: bold;'><h5>ATRACTIVO EN LAS VACANTES</h5></p>", unsafe_allow_html=True)
+            st.empty()
+            st.metric("", str('KPI') + " 2", delta=" -50 %", delta_color="normal")
+        with col3:
+            st.markdown("<p style='font-size: 18px; font-weight: bold;'><h5>PERMANENCIA EN LA EMPRESA</h5></p>", unsafe_allow_html=True)
+            st.empty()
+            st.metric("", str('KPI') + " 3", delta=" -50 %", delta_color="normal")
+        with col4: 
+            st.markdown("<p style='font-size: 18px; font-weight: bold;'><h5>TIEMPO DE CONTRATACION</h5></p>", unsafe_allow_html=True)
+            st.empty()
+            st.metric("", str('KPI') + " 4", delta=" -50 %", delta_color="normal")
+        with col5:     
+            st.markdown("<p style='font-size: 18px; font-weight: bold;'><h5>COSTOS EN CONTRATACIONES</h5></p>", unsafe_allow_html=True)
+            st.empty()
+            st.metric("", str('KPI') + " 5", delta=" -50 %", delta_color="normal")
+
+        
+        with st.container():
+            col1, col2, col3,col4,col5 = st.columns(5)
+            periodo=""
+            if col1.button("selecione1"):
+                st.subheader("Contrataciones antes del servicio - Contrataciones actuales con servicio = Beneficio de servicio en contrataciones")
+                # Aquí se puede agregar el código para generar y mostrar el gráfico
+                df_contrataciones = pd.DataFrame({
+                    "Meses": ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio"],
+                    "Antes del servicio": [50, 75, 100, 125, 150, 175],
+                    "Con servicio": [75, 100, 125, 150, 175, 200]
+                })
+                fig_contrataciones = px.line(df_contrataciones, x="Meses", y=["Antes del servicio", "Con servicio"], title="Comparación de contrataciones")
+                st.plotly_chart(fig_contrataciones)         
+            if col2.button("selecione2"):
+                st.subheader("Contrataciones antes del servicio - Contrataciones actuales con servicio = Beneficio de servicio en contrataciones")
+                # Aquí se puede agregar el código para generar y mostrar el gráfico
+                df_contrataciones = pd.DataFrame({
+                    "Meses": ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio"],
+                    "Antes del servicio": [2, 1, 2, 3, 2, 1],
+                    "Con servicio": [3, 5, 5, 6, 8, 10]
+                })
+                fig_contrataciones = px.line(df_contrataciones, x="Meses", y=["Antes del servicio", "Con servicio"], title="Medicion de parametros 6 meses en comparacion antes y despues de Taly ")
+                st.plotly_chart(fig_contrataciones) 
+            if col3.button("selecione3"):
+                periodo = "kpi 3"
+            if col4.button("selecione4"):
+                periodo = "kpi 4"
+            if col5.button("selecione5"):
+                periodo = "kpi 5"
+
+
+
+    elif empresa_seleccionada == "CodeWorks":
+
+        col1, col2, col3,col4,col5 = st.columns(5)
+
+        with col1: 
+            st.markdown("<p style='font-size: 18px; font-weight: bold;'><h5>AUMENTO DE LAS CONTRATACIONES</h5></p>", unsafe_allow_html=True)
+            st.empty()
+            st.metric("", str('KPI') + " 1", delta=" -50 %", delta_color="normal")
+        with col2: 
+            st.markdown("<p style='font-size: 18px; font-weight: bold;'><h5>ATRACTIVO EN LAS VACANTES</h5></p>", unsafe_allow_html=True)
+            st.empty()
+            st.metric("", str('KPI') + " 2", delta=" -50 %", delta_color="normal")
+        with col3:
+            st.markdown("<p style='font-size: 18px; font-weight: bold;'><h5>PERMANENCIA EN LA EMPRESA</h5></p>", unsafe_allow_html=True)
+            st.empty()
+            st.metric("", str('KPI') + " 3", delta=" -50 %", delta_color="normal")
+        with col4: 
+            st.markdown("<p style='font-size: 18px; font-weight: bold;'><h5>TIEMPO DE CONTRATACION</h5></p>", unsafe_allow_html=True)
+            st.empty()
+            st.metric("", str('KPI') + " 4", delta=" -50 %", delta_color="normal")
+        with col5:     
+            st.markdown("<p style='font-size: 18px; font-weight: bold;'><h5>COSTOS EN CONTRATACIONES</h5></p>", unsafe_allow_html=True)
+            st.empty()
+            st.metric("", str('KPI') + " 5", delta=" -50 %", delta_color="normal")
+
+        
+        with st.container():
+            col1, col2, col3,col4,col5 = st.columns(5)
+            periodo=""
+            if col1.button("selecione1"):
+                st.subheader("Contrataciones antes del servicio - Contrataciones actuales con servicio = Beneficio de servicio en contrataciones")
+                # Aquí se puede agregar el código para generar y mostrar el gráfico
+                df_contrataciones = pd.DataFrame({
+                    "Meses": ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio"],
+                    "Antes del servicio": [50, 75, 100, 125, 150, 175],
+                    "Con servicio": [75, 100, 125, 150, 175, 200]
+                })
+                fig_contrataciones = px.line(df_contrataciones, x="Meses", y=["Antes del servicio", "Con servicio"], title="Comparación de contrataciones")
+                st.plotly_chart(fig_contrataciones) 
+            if col2.button("selecione2"):
+                st.subheader("Contrataciones antes del servicio - Contrataciones actuales con servicio = Beneficio de servicio en contrataciones")
+                # Aquí se puede agregar el código para generar y mostrar el gráfico
+                df_contrataciones = pd.DataFrame({
+                    "Meses": ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio"],
+                    "Antes del servicio": [2, 1, 2, 3, 2, 1],
+                    "Con servicio": [3, 5, 5, 6, 8, 10]
+                })
+                fig_contrataciones = px.line(df_contrataciones, x="Meses", y=["Antes del servicio", "Con servicio"], title="Medicion de parametros 6 meses en comparacion antes y despues de Taly ")
+                st.plotly_chart(fig_contrataciones) 
+            if col3.button("selecione3"):
+                periodo = "kpi 3"
+            if col4.button("selecione4"):
+                periodo = "kpi 4"
+            if col5.button("selecione5"):
+                periodo = "kpi 5"
+
+    elif empresa_seleccionada == "CyberDefenders":
+        col1, col2, col3,col4,col5 = st.columns(5)
+
+        with col1: 
+            st.markdown("<p style='font-size: 18px; font-weight: bold;'><h5>AUMENTO DE LAS CONTRATACIONES</h5></p>", unsafe_allow_html=True)
+            st.empty()
+            st.metric("", str('KPI') + " 1", delta=" -50 %", delta_color="normal")
+        with col2: 
+            st.markdown("<p style='font-size: 18px; font-weight: bold;'><h5>ATRACTIVO EN LAS VACANTES</h5></p>", unsafe_allow_html=True)
+            st.empty()
+            st.metric("", str('KPI') + " 2", delta=" -50 %", delta_color="normal")
+        with col3:
+            st.markdown("<p style='font-size: 18px; font-weight: bold;'><h5>PERMANENCIA EN LA EMPRESA</h5></p>", unsafe_allow_html=True)
+            st.empty()
+            st.metric("", str('KPI') + " 3", delta=" -50 %", delta_color="normal")
+        with col4: 
+            st.markdown("<p style='font-size: 18px; font-weight: bold;'><h5>TIEMPO DE CONTRATACION</h5></p>", unsafe_allow_html=True)
+            st.empty()
+            st.metric("", str('KPI') + " 4", delta=" -50 %", delta_color="normal")
+        with col5:     
+            st.markdown("<p style='font-size: 18px; font-weight: bold;'><h5>COSTOS EN CONTRATACIONES</h5></p>", unsafe_allow_html=True)
+            st.empty()
+            st.metric("", str('KPI') + " 5", delta=" -50 %", delta_color="normal")
+
+        
+        with st.container():
+            col1, col2, col3,col4,col5 = st.columns(5)
+            periodo=""
+            if col1.button("selecione1"):
+                st.subheader("Contrataciones antes del servicio - Contrataciones actuales con servicio = Beneficio de servicio en contrataciones")
+                # Aquí se puede agregar el código para generar y mostrar el gráfico
+                df_contrataciones = pd.DataFrame({
+                    "Meses": ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio"],
+                    "Antes del servicio": [50, 75, 100, 125, 150, 175],
+                    "Con servicio": [75, 100, 125, 150, 175, 200]
+                })
+                fig_contrataciones = px.line(df_contrataciones, x="Meses", y=["Antes del servicio", "Con servicio"], title="Comparación de contrataciones")
+                st.plotly_chart(fig_contrataciones) 
+            if col2.button("selecione2"):
+                st.subheader("Contrataciones antes del servicio - Contrataciones actuales con servicio = Beneficio de servicio en contrataciones")
+                # Aquí se puede agregar el código para generar y mostrar el gráfico
+                df_contrataciones = pd.DataFrame({
+                    "Meses": ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio"],
+                    "Antes del servicio": [2, 1, 2, 3, 2, 1],
+                    "Con servicio": [3, 5, 5, 6, 8, 10]
+                })
+                fig_contrataciones = px.line(df_contrataciones, x="Meses", y=["Antes del servicio", "Con servicio"], title="Medicion de parametros 6 meses en comparacion antes y despues de Taly ")
+                st.plotly_chart(fig_contrataciones) 
+            if col3.button("selecione3"):
+                periodo = "kpi 3"
+            if col4.button("selecione4"):
+                periodo = "kpi 4"
+            if col5.button("selecione5"):
+                periodo = "kpi 5"
+    elif empresa_seleccionada == "TechSolutions":
+        col1, col2, col3,col4,col5 = st.columns(5)
+
+        with col1: 
+            st.markdown("<p style='font-size: 18px; font-weight: bold;'><h5>AUMENTO DE LAS CONTRATACIONES</h5></p>", unsafe_allow_html=True)
+            st.empty()
+            st.metric("", str('KPI') + " 1", delta=" -50 %", delta_color="normal")
+        with col2: 
+            st.markdown("<p style='font-size: 18px; font-weight: bold;'><h5>ATRACTIVO EN LAS VACANTES</h5></p>", unsafe_allow_html=True)
+            st.empty()
+            st.metric("", str('KPI') + " 2", delta=" -50 %", delta_color="normal")
+        with col3:
+            st.markdown("<p style='font-size: 18px; font-weight: bold;'><h5>PERMANENCIA EN LA EMPRESA</h5></p>", unsafe_allow_html=True)
+            st.empty()
+            st.metric("", str('KPI') + " 3", delta=" -50 %", delta_color="normal")
+        with col4: 
+            st.markdown("<p style='font-size: 18px; font-weight: bold;'><h5>TIEMPO DE CONTRATACION</h5></p>", unsafe_allow_html=True)
+            st.empty()
+            st.metric("", str('KPI') + " 4", delta=" -50 %", delta_color="normal")
+        with col5:     
+            st.markdown("<p style='font-size: 18px; font-weight: bold;'><h5>COSTOS EN CONTRATACIONES</h5></p>", unsafe_allow_html=True)
+            st.empty()
+            st.metric("", str('KPI') + " 5", delta=" -50 %", delta_color="normal")
+
+        
+        with st.container():
+            col1, col2, col3,col4,col5 = st.columns(5)
+            periodo=""
+            if col1.button("selecione1"):
+                st.subheader("Contrataciones antes del servicio - Contrataciones actuales con servicio = Beneficio de servicio en contrataciones")
+                # Aquí se puede agregar el código para generar y mostrar el gráfico
+                df_contrataciones = pd.DataFrame({
+                    "Meses": ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio"],
+                    "Antes del servicio": [2, 1, 2, 3, 2, 1],
+                    "Con servicio": [3, 5, 5, 6, 8, 10]
+                })
+                fig_contrataciones = px.line(df_contrataciones, x="Meses", y=["Antes del servicio", "Con servicio"], title="Medicion de parametros 6 meses en comparacion antes y despues de Taly ")
+                st.plotly_chart(fig_contrataciones) 
+            if col2.button("selecione2"):
+                st.subheader("Contrataciones antes del servicio - Contrataciones actuales con servicio = Beneficio de servicio en contrataciones")
+                # Aquí se puede agregar el código para generar y mostrar el gráfico
+                df_contrataciones = pd.DataFrame({
+                    "Meses": ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio"],
+                    "Antes del servicio": [2, 1, 2,0,0,0 ],
+                    "Con servicio": [3, 5, 5, 6, 8, 10]
+                })
+                # Creamos el gráfico de caja con los datos de contrataciones
+                fig = px.bar(df_contrataciones, y="Meses", x=["Antes del servicio", "Con servicio"],  title="Medicion de parametros 6 meses en comparacion antes y despues de Taly ")
+                st.plotly_chart(fig) 
+
+            if col3.button("selecione3"):
+                periodo = "kpi 3"
+            if col4.button("selecione4"):
+                periodo = "kpi 4"
+            if col5.button("selecione5"):
+                periodo = "kpi 5"
