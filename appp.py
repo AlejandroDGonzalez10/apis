@@ -234,7 +234,7 @@ else:
 
 
 
-
+st.title('Consulta informacion de películas')
 def retorno(pelicula):
     '''
     The input is the movie's title, it returns the investment, the profit, the return and the year in which it was released
@@ -261,7 +261,7 @@ result = retorno(selected_movie)
 
 # Display the result
 # Interfaz de Streamlit
-st.title('Consulta informacion de películas')
+
 if isinstance(result, str):
     st.write(result)
 else:
