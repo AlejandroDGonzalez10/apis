@@ -50,7 +50,7 @@ if st.button('Consultar Mes'):
         st.error('Mes no válido. Por favor, seleccione un mes válido.')
     else:
         st.success(f"En el mes de {resultado['mes']} se estrenaron {resultado['cantidad']} películas.")
-#---------------------------------------------------------------------------------------------------------------------------------------------------------
+
 
 def peliculas_dia(dia):
     '''
@@ -93,7 +93,6 @@ if st.button('Consultar Dia'):
         st.error('Día no válido. Por favor, seleccione un día válido.')
     else:
         st.success(f"En el día {resultado['dia']} se estrenaron {resultado['cantidad']} películas.")
-#---------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
 def franquicia(franquicia):
@@ -140,7 +139,8 @@ if st.button('Consultar'):
 
 
 
-#---------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
 
 
 # Crear un conjunto vacío para almacenar los países únicos
@@ -178,7 +178,11 @@ if pais:
 
 
 
-#---------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
 
 
 
@@ -216,7 +220,8 @@ def productoras(productora):
 
 # Call the function with the selected production company
 result = productoras(selected_productora)
-
+# Interfaz de Streamlit
+st.title('Consulta de productora')
 # Display the result
 if isinstance(result, str):
     st.write(result)
@@ -227,7 +232,6 @@ else:
 
 
 
-#---------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
 
@@ -257,6 +261,8 @@ selected_movie = st.selectbox('Selecciona una película', movie_titles)
 result = retorno(selected_movie)
 
 # Display the result
+# Interfaz de Streamlit
+st.title('Consulta informacion de películas')
 if isinstance(result, str):
     st.write(result)
 else:
