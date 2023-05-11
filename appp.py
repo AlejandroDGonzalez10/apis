@@ -185,7 +185,7 @@ if pais:
 
 
 
-
+st.title('Consulta de productora')
 # create an empty set to hold unique companies
 unique_company = set()
 
@@ -201,7 +201,7 @@ unique_company = [company.lower() for company in list(unique_company)]
 
 # Create a SelectBox for selecting the production company
 selected_productora = st.selectbox('Selecciona una productora', unique_company, index=0)
-st.title('Consulta de productora')
+
 def productoras(productora):
     '''
     The input is the production company, returning the total profit and the number of movies they produced.
@@ -217,7 +217,7 @@ def productoras(productora):
         return {'productora':productora, 'ganancia_total':total_revenue, 'cantidad':n_films}
     else:
         return 'Productora no válida'
-st.title('Consulta de productora')
+
 # Call the function with the selected production company
 result = productoras(selected_productora)
 # Interfaz de Streamlit
