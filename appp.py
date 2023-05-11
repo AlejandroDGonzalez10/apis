@@ -201,7 +201,7 @@ unique_company = [company.lower() for company in list(unique_company)]
 
 # Create a SelectBox for selecting the production company
 selected_productora = st.selectbox('Selecciona una productora', unique_company, index=0)
-
+st.title('Consulta de productora')
 def productoras(productora):
     '''
     The input is the production company, returning the total profit and the number of movies they produced.
