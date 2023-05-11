@@ -221,7 +221,6 @@ st.title('Consulta de productora')
 # Call the function with the selected production company
 result = productoras(selected_productora)
 # Interfaz de Streamlit
-st.title('Consulta de productora')
 # Display the result
 if isinstance(result, str):
     st.write(result)
