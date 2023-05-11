@@ -217,7 +217,7 @@ def productoras(productora):
         return {'productora':productora, 'ganancia_total':total_revenue, 'cantidad':n_films}
     else:
         return 'Productora no válida'
-
+st.title('Consulta de productora')
 # Call the function with the selected production company
 result = productoras(selected_productora)
 # Interfaz de Streamlit
