@@ -6,3 +6,7 @@ plotly
 geopandas
 folium
 streamlit_folium
+streamlit
+pandas
+Pillow
+scikit-learn2
